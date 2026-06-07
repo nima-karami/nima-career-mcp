@@ -1,0 +1,16 @@
+# Skills grouped by category. Each skill SHOULD link the evidence ids that back it, so a
+# skill is never an unsupported claim. Placeholder content — replace with your own.
+- category: Languages
+  skills:
+    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-e1, tp-e2] }
+    - { name: Python, proficiency: proficient, evidence_ids: [tp-e3] }
+- category: Frontend
+  skills:
+    - { name: React, proficiency: expert, evidence_ids: [tp-e1, tp-e2, tp-portfolio-e1] }
+    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-e2, tp-portfolio-e1] }
+- category: Backend & Realtime
+  skills:
+    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-e1, tp-e3] }
+- category: AI / Agents
+  skills:
+    - { name: Model Context Protocol (MCP), proficiency: proficient, evidence_ids: [tp-portfolio-e2] }

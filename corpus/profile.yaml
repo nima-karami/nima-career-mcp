@@ -1,0 +1,21 @@
+# Public-safe profile. NO secrets, NO private contact details beyond your stated policy.
+# Placeholder content — replace with your curated facts.
+name: Nima Karami
+headline: Design / Product Engineer
+location: Toronto, CA
+links:
+  website: https://example.com
+  github: https://github.com/your-handle
+  linkedin: https://www.linkedin.com/in/your-handle
+bio: >-
+  Design-minded product engineer who builds 0-to-1 products end to end — from interaction
+  design through shipped, production software. Comfortable across the stack with a bias
+  toward fast, tasteful iteration.
+
+# Approved skeleton lines used to assemble a resume summary. Only {headline}, {top_tags},
+# and {name} are substituted — all from corpus values. No free-form generation at runtime.
+summary_templates:
+  - "{headline} focused on {top_tags}."
+  - "{headline} with hands-on experience across {top_tags}."
+
+contact_policy: "Reach out via the website contact form."

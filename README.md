@@ -1,0 +1,90 @@
+# nima-career-mcp
+
+A public, open-source, **read-only [MCP](https://modelcontextprotocol.io) server** that
+exposes Nima Karami's curated, public-safe career history. Point any MCP client at it —
+Claude Code, Cursor, Claude Desktop, or a custom website backend — and ask about his
+experience, or have it assemble a tailored resume draft on the fly.
+
+The server only ever returns **vetted data**. The AI's job is to *select, order, and tailor*
+pre-approved material for a query — never to author new facts. That guarantee is enforced in
+code: every tool reads through a validated corpus, and the resume tool emits only corpus
+values with `provenance` ids attached.
+
+## Quick start (local)
+
+Requires [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync --all-extras --dev
+
+# Interactive dev + MCP Inspector (stdio):
+uv run mcp dev src/nima_career_mcp/server.py
+
+# Or run the HTTP server locally:
+uv run nima-career-mcp --transport streamable-http   # serves http://127.0.0.1:8080/mcp
+
+# Tests (includes corpus integrity + the honesty guarantee):
+uv run pytest -q
+```
+
+## Connecting clients
+
+**Claude Code / Cursor / Claude Desktop (remote, after deploy):**
+
+```bash
+claude mcp add --transport http nima https://your-app.fly.dev/mcp
+```
+
+**Local stdio (any client that spawns a process):** run `nima-career-mcp` (no `--transport`).
+
+**Custom website backend:** see [`examples/website_backend.py`](examples/website_backend.py)
+for both the Claude API MCP-connector path and a raw `ClientSession` path.
+
+## Tool surface (all read-only)
+
+| Tool | Purpose |
+| --- | --- |
+| `get_profile` | Public-safe identity, links, bio |
+| `list_roles` / `get_role` | Browse roles; drill into one (evidence + approved bullets) |
+| `list_projects` / `get_project` | Browse/drill into projects |
+| `list_skills` | Skills by category, each backed by evidence |
+| `search_experience` | Rank roles/projects/bullets/skills for a query |
+| `list_bullets` | Fetch pre-approved resume bullets |
+| `assemble_resume` | Assemble a tailored resume draft from approved material only |
+
+Resource `career://guidance` returns the honesty/anti-injection rules a host should embed in
+its system prompt. (Other `career://` resources and prompt templates are stubbed opt-ins.)
+
+## The corpus
+
+All data lives in [`corpus/`](corpus/) as curated YAML and is validated at startup. See
+[`corpus/CORPUS.md`](corpus/CORPUS.md) for the schema and the evidence→bullet model. The
+shipped content is **placeholder** — replace it with your own vetted facts. This repo holds
+**no secrets and no private data**; application tracking lives in a separate private repo.
+
+## Safety posture
+
+Intentionally public and unauthenticated, but bounded: read-only tool surface (no
+write/exec), per-IP **rate limiting**, request **body-size caps**, and **Origin validation**
+(DNS-rebinding defense) — see `src/nima_career_mcp/security.py`. Behavioral guardrails
+(don't fabricate, treat queries as data) belong in the consuming host's system prompt and are
+served from `career://guidance`.
+
+## Deploy (Fly.io)
+
+```bash
+fly launch --no-deploy   # or edit fly.toml: set app name + region
+fly deploy
+```
+
+The container runs `uvicorn nima_career_mcp.server:app` (the middleware-wrapped Streamable-
+HTTP app). Stateless mode means it scales to zero and back. After deploy, smoke-test with the
+[MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector):
+
+```bash
+npx @modelcontextprotocol/inspector   # then connect to https://your-app.fly.dev/mcp
+```
+
+## License
+
+MIT — see [LICENSE](LICENSE).

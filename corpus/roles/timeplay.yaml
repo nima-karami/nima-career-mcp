@@ -1,0 +1,44 @@
+# Example role — placeholder-but-realistic. Replace evidence/bullets with your vetted facts.
+# Rule of thumb: `evidence` = granular facts you can stand behind; `bullets` = resume-ready
+# phrasings derived from that evidence (each bullet cites the evidence ids it came from).
+id: timeplay
+org: TimePlay
+title: Product Engineer
+start: "2021-03"
+end: "2023-08"        # use null for a current role
+location: Toronto, CA
+summary: Built 0-to-1 interactive second-screen experiences for live venues.
+tags: [0-to-1, product, frontend, realtime, design]
+
+evidence:
+  - id: tp-e1
+    text: Built the live second-screen gameplay client used by audiences in theaters.
+    metrics:
+      - { label: venues, value: "40+" }
+    tags: [0-to-1, realtime, frontend]
+  - id: tp-e2
+    text: Designed and shipped the host-control dashboard operators used to run live shows.
+    tags: [product, design, frontend]
+  - id: tp-e3
+    text: Cut median round-trip latency of the realtime sync layer through protocol tuning.
+    metrics:
+      - { label: "latency reduction", value: "~40%" }
+    tags: [realtime, backend, performance]
+
+bullets:
+  - id: tp-b1
+    text: Shipped a 0-to-1 realtime second-screen product deployed to 40+ live venues.
+    metrics:
+      - { label: venues, value: "40+" }
+    source_ids: [tp-e1]
+    tags: [0-to-1, product, realtime]
+  - id: tp-b2
+    text: Designed and built the operator dashboard for running live interactive shows.
+    source_ids: [tp-e2]
+    tags: [product, design, frontend]
+  - id: tp-b3
+    text: Reduced realtime sync latency ~40% via protocol tuning, smoothing live gameplay.
+    metrics:
+      - { label: "latency reduction", value: "~40%" }
+    source_ids: [tp-e3]
+    tags: [realtime, performance, backend]

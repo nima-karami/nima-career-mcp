@@ -1,0 +1,24 @@
+# Example project — placeholder. Replace with your vetted facts.
+id: terminal-portfolio
+name: Terminal-Style Portfolio
+role_id: null            # set to a role id if this was done within a role
+blurb: A personal site rebuilt as a terminal/Claude-Code-style chat over a career MCP server.
+tags: [0-to-1, product, frontend, design, ai]
+
+evidence:
+  - id: tp-portfolio-e1
+    text: Built a terminal-style web UI where visitors chat with an AI about my background.
+    tags: [frontend, design, ai]
+  - id: tp-portfolio-e2
+    text: Exposed a curated career corpus through a public MCP server for any agent to query.
+    tags: [ai, backend, 0-to-1]
+
+bullets:
+  - id: tp-portfolio-b1
+    text: Designed and built a terminal-style AI portfolio backed by a public MCP server.
+    source_ids: [tp-portfolio-e1, tp-portfolio-e2]
+    tags: [0-to-1, product, ai]
+
+links:
+  - { label: Live site, url: https://example.com }
+  - { label: Source, url: https://github.com/your-handle/nima-career-mcp }

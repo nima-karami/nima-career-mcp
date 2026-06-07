@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual envs / uv
+.venv/
+.python-version
+uv.lock
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.pyright/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Env files — this is a PUBLIC, secret-free repo. Never commit these.
+.env
+.env.*

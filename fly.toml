@@ -1,0 +1,28 @@
+# Fly.io deploy config. Rename `app` and set your domain before `fly deploy`.
+# Follows Fly's remote-MCP blueprint: https://fly.io/docs/blueprints/remote-mcp-servers/
+app = "nima-career-mcp"        # TODO: set to your Fly app name
+primary_region = "yyz"          # Toronto; change as desired
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NIMA_CORPUS_DIR = "/app/corpus"
+  # Comma-separated origin allowlist. Empty = allow any origin (public server).
+  # Set this to your website origin(s) if you want to restrict browser callers.
+  NIMA_ALLOWED_ORIGINS = ""
+  # Per-IP requests per minute (rate limit). Tune for expected traffic.
+  NIMA_RATE_LIMIT_PER_MIN = "60"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0      # stateless: scale to zero when idle
+
+# The MCP endpoint is served at /mcp on this app's https URL,
+# e.g. https://<app>.fly.dev/mcp
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
