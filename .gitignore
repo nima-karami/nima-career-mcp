@@ -9,7 +9,7 @@ dist/
 # Virtual envs / uv
 .venv/
 .python-version
-uv.lock
+# uv.lock is committed for reproducible installs + CI caching.
 
 # Tooling caches
 .pytest_cache/
