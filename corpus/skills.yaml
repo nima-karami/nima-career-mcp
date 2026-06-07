@@ -2,15 +2,23 @@
 # skill is never an unsupported claim. Placeholder content — replace with your own.
 - category: Languages
   skills:
-    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1] }
-    - { name: Python, proficiency: proficient, evidence_ids: [tp-fs-e2] }
+    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, nw-e1, sa-co-e1] }
+    - { name: Python, proficiency: proficient, evidence_ids: [tp-fs-e2, cli-e1] }
+    - { name: JavaScript, proficiency: expert, evidence_ids: [sa-in-e1, sa-co-e1] }
 - category: Frontend
   skills:
-    - { name: React, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, tp-portfolio-e1] }
-    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-fs-e1, tp-portfolio-e1] }
+    - { name: React, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, nw-e1, rw-e1, tp-portfolio-e1] }
+    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-fs-e1, nw-e1, tp-portfolio-e1] }
+    - { name: Design Systems, proficiency: proficient, evidence_ids: [nw-e2, dsk-e1] }
+    - { name: Accessibility, proficiency: proficient, evidence_ids: [dsk-e1] }
 - category: Backend & Realtime
   skills:
-    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-fe-e1, tp-fs-e2] }
+    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-fe-e1, tp-fs-e2, rw-e1] }
+    - { name: Payments integration, proficiency: familiar, evidence_ids: [sa-co-e2] }
+    - { name: CLIs / Developer tooling, proficiency: proficient, evidence_ids: [cli-e1] }
+- category: Data
+  skills:
+    - { name: Data Visualization, proficiency: proficient, evidence_ids: [nw-e1] }
 - category: Leadership
   skills:
     - { name: Engineering Leadership, proficiency: proficient, evidence_ids: [tp-ld-e1, tp-ld-e2] }

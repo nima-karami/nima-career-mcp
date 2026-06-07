@@ -18,6 +18,17 @@ def test_progression_groups_into_one_tenure(service: CareerService) -> None:
     assert timeplay.start == "2021-03"
 
 
+def test_seed_studio_atlas_is_two_tenures(service: CareerService) -> None:
+    # The seed has a Studio Atlas internship (2015) and a later contract (2017); the gap
+    # makes them two separate tenures even though they share a company_id.
+    exp = service.list_experience()
+    studio = [c for c in exp.companies if c.company_id == "studio-atlas"]
+    assert len(studio) == 2
+    # Newest tenure (the 2017 contract) sorts ahead of the 2015 internship.
+    starts = [c.start for c in studio]
+    assert starts == sorted(starts, reverse=True)
+
+
 def _role(rid: str, title: str, start: str, end: str | None) -> Role:
     return Role(id=rid, company_id="acme", org="Acme", title=title, start=start, end=end)
 

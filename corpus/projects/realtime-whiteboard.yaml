@@ -1,0 +1,26 @@
+id: realtime-whiteboard
+name: Realtime Collaborative Whiteboard
+role_id: null            # personal side project, not tied to a role
+blurb: A side project exploring CRDT-based realtime collaboration in the browser.
+tags: [realtime, frontend, 0-to-1, side-project]
+
+evidence:
+  - id: rw-e1
+    text: Implemented CRDT-based sync so multiple users can draw simultaneously.
+    tags: [realtime, frontend]
+  - id: rw-e2
+    text: Built an offline-first cache that reconciles edits on reconnect.
+    tags: [frontend, offline]
+
+bullets:
+  - id: rw-b1
+    text: Built a CRDT-based realtime whiteboard supporting simultaneous multi-user drawing.
+    source_ids: [rw-e1]
+    tags: [realtime, frontend, 0-to-1]
+  - id: rw-b2
+    text: Implemented offline-first sync that reconciles edits on reconnect.
+    source_ids: [rw-e2]
+    tags: [frontend, offline]
+
+links:
+  - { label: Demo, url: https://example.com/whiteboard }

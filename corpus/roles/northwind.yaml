@@ -1,0 +1,33 @@
+# A single-role company (no company_id needed, but set for consistency) between Studio
+# Atlas and TimePlay. Renders as one tenure with one position.
+id: northwind
+company_id: northwind
+org: Northwind Labs
+title: Design Technologist
+start: "2019-01"
+end: "2021-02"
+location: Toronto, CA
+summary: Bridged design and engineering on a data-visualization product.
+tags: [design, frontend, product, dataviz]
+
+evidence:
+  - id: nw-e1
+    text: Prototyped and shipped interactive data-visualization dashboards.
+    tags: [frontend, dataviz, design]
+  - id: nw-e2
+    text: Built a shared component library adopted across product teams.
+    metrics:
+      - { label: "teams adopting", value: "5" }
+    tags: [frontend, design, product]
+
+bullets:
+  - id: nw-b1
+    text: Prototyped and shipped interactive data-visualization dashboards.
+    source_ids: [nw-e1]
+    tags: [frontend, dataviz, design]
+  - id: nw-b2
+    text: Built a shared component library adopted by 5 product teams.
+    metrics:
+      - { label: "teams adopting", value: "5" }
+    source_ids: [nw-e2]
+    tags: [frontend, design, product]
