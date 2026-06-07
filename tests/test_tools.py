@@ -9,11 +9,14 @@ from nima_career_mcp.service import CareerService
 
 def test_list_roles_includes_seed(service: CareerService) -> None:
     ids = {r.id for r in service.list_roles().roles}
-    assert "timeplay" in ids
+    assert {"timeplay-frontend", "timeplay-fullstack", "timeplay-lead"}.issubset(ids)
+    # The progression roles all share one company_id.
+    company_ids = {r.company_id for r in service.list_roles().roles if r.id.startswith("timeplay")}
+    assert company_ids == {"timeplay"}
 
 
 def test_get_role_has_evidence_and_bullets(service: CareerService) -> None:
-    role = service.get_role("timeplay")
+    role = service.get_role("timeplay-lead")
     assert role.evidence and role.bullets
 
 
@@ -25,12 +28,12 @@ def test_get_role_unknown_raises(service: CareerService) -> None:
 def test_search_finds_relevant_role(service: CareerService) -> None:
     results = service.search_experience("0-to-1 product realtime")
     assert results.hits
-    assert any(h.id == "timeplay" for h in results.hits if h.kind == "role")
+    assert any(h.id.startswith("timeplay") for h in results.hits if h.kind == "role")
 
 
 def test_list_bullets_by_role(service: CareerService) -> None:
-    bullets = service.list_bullets(role_id="timeplay").bullets
-    assert len(bullets) == 3
+    bullets = service.list_bullets(role_id="timeplay-fullstack").bullets
+    assert len(bullets) == 2
     assert all(b.source_ids for b in bullets)
 
 
@@ -55,6 +58,7 @@ async def test_protocol_exposes_tools() -> None:
     assert {
         "get_profile",
         "list_roles",
+        "list_experience",
         "get_role",
         "list_projects",
         "get_project",

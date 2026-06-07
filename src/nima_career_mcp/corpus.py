@@ -58,13 +58,19 @@ class Link(BaseModel):
 
 
 class Role(BaseModel):
-    """A job/role. `end=None` means 'present'."""
+    """A single job/title. `end=None` means 'present'.
+
+    Multiple roles can share a `company_id` to express a title progression within one
+    company (e.g. Frontend -> Fullstack -> Lead). Grouping into company tenures happens at
+    render time (see grouping.py); the data stays flat so a client can group or not.
+    """
 
     id: str
     org: str
     title: str
     start: str  # "YYYY-MM"
     end: str | None = None  # "YYYY-MM" or null for present
+    company_id: str | None = None  # shared key for roles at the same company
     location: str | None = None
     summary: str = ""
     tags: list[str] = Field(default_factory=list)
@@ -177,6 +183,18 @@ class Corpus(BaseModel):
             if p.role_id and p.role_id not in role_ids:
                 problems.append(
                     f"project '{p.id}' references missing role_id '{p.role_id}'"
+                )
+
+        # Roles sharing a company_id must agree on the display org name.
+        org_by_company: dict[str, str] = {}
+        for r in self.roles:
+            if not r.company_id:
+                continue
+            existing = org_by_company.setdefault(r.company_id, r.org)
+            if existing != r.org:
+                problems.append(
+                    f"role '{r.id}' org '{r.org}' conflicts with '{existing}' "
+                    f"for company_id '{r.company_id}'"
                 )
 
         if problems:

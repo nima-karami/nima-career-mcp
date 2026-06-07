@@ -17,7 +17,7 @@ from nima_career_mcp.corpus import (
 def test_shipped_corpus_loads_and_is_valid(corpus: Corpus) -> None:
     assert corpus.profile.name
     assert corpus.roles, "expected at least the seed role"
-    assert corpus.role("timeplay") is not None
+    assert corpus.role("timeplay-lead") is not None
 
 
 def test_every_bullet_source_resolves(corpus: Corpus) -> None:

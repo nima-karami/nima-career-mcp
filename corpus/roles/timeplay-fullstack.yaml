@@ -1,0 +1,32 @@
+# TimePlay role 2 of 3 — continues directly from the frontend role (same company_id).
+id: timeplay-fullstack
+company_id: timeplay
+org: TimePlay
+title: Fullstack Developer
+start: "2022-06"
+end: "2023-02"
+location: Toronto, CA
+summary: Extended the platform across the stack and built operator tooling.
+tags: [fullstack, product, design, frontend, backend, realtime]
+
+evidence:
+  - id: tp-fs-e1
+    text: Designed and shipped the host-control dashboard operators used to run live shows.
+    tags: [product, design, frontend]
+  - id: tp-fs-e2
+    text: Cut median round-trip latency of the realtime sync layer through protocol tuning.
+    metrics:
+      - { label: "latency reduction", value: "~40%" }
+    tags: [realtime, backend, performance]
+
+bullets:
+  - id: tp-fs-b1
+    text: Designed and built the operator dashboard for running live interactive shows.
+    source_ids: [tp-fs-e1]
+    tags: [product, design, frontend]
+  - id: tp-fs-b2
+    text: Reduced realtime sync latency ~40% via protocol tuning, smoothing live gameplay.
+    metrics:
+      - { label: "latency reduction", value: "~40%" }
+    source_ids: [tp-fs-e2]
+    tags: [realtime, performance, backend]

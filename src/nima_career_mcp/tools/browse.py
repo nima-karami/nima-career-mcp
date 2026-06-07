@@ -5,6 +5,7 @@ from __future__ import annotations
 from mcp.server.fastmcp import FastMCP
 
 from ..corpus import Profile, Project, Role
+from ..grouping import ExperienceList
 from ..service import (
     CareerService,
     ProjectList,
@@ -22,8 +23,22 @@ def register_browse(mcp: FastMCP, service: CareerService) -> None:
 
     @mcp.tool()
     def list_roles() -> RoleList:
-        """List every role/job with id, org, title, dates, location, summary, and tags."""
+        """List every role/job (flat) with id, org, company_id, title, dates, tags.
+
+        Roles sharing a company_id are a title progression at one company; use
+        list_experience for the grouped view.
+        """
         return service.list_roles()
+
+    @mcp.tool()
+    def list_experience() -> ExperienceList:
+        """Roles grouped into company tenures (newest first).
+
+        Each company tenure lists its positions (title progression) newest-first. A company
+        you left and later rejoined appears as two separate tenures. Use this when you want
+        experience grouped by employer rather than as a flat list of titles.
+        """
+        return service.list_experience()
 
     @mcp.tool()
     def get_role(role_id: str) -> Role:

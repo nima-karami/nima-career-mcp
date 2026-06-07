@@ -1,0 +1,26 @@
+# TimePlay role 1 of 3 — a title progression sharing company_id: timeplay.
+# Placeholder content; replace evidence/bullets with your vetted facts.
+id: timeplay-frontend
+company_id: timeplay
+org: TimePlay
+title: Frontend Developer
+start: "2021-03"
+end: "2022-06"
+location: Toronto, CA
+summary: Built the audience-facing second-screen gameplay client.
+tags: [frontend, realtime, 0-to-1]
+
+evidence:
+  - id: tp-fe-e1
+    text: Built the live second-screen gameplay client used by audiences in theaters.
+    metrics:
+      - { label: venues, value: "40+" }
+    tags: [0-to-1, realtime, frontend]
+
+bullets:
+  - id: tp-fe-b1
+    text: Built a 0-to-1 realtime second-screen gameplay client deployed to 40+ live venues.
+    metrics:
+      - { label: venues, value: "40+" }
+    source_ids: [tp-fe-e1]
+    tags: [0-to-1, frontend, realtime]

@@ -16,6 +16,13 @@ from collections import Counter
 from pydantic import BaseModel, Field
 
 from .corpus import Bullet, Corpus, Profile, Project, Role, SkillCategory
+from .grouping import (
+    ExperienceList,
+    fmt_range,
+    group_into_tenures,
+    month_index,
+    split_into_stints,
+)
 from .search import SearchHit, search
 
 # --- response models -------------------------------------------------------------
@@ -24,6 +31,7 @@ from .search import SearchHit, search
 class RoleSummary(BaseModel):
     id: str
     org: str
+    company_id: str | None
     title: str
     start: str
     end: str | None
@@ -74,8 +82,11 @@ class SearchResults(BaseModel):
 class ResumeRole(BaseModel):
     role_id: str
     org: str
+    company_id: str
     title: str
     dates: str
+    start: str
+    end: str | None
     location: str | None
     bullets: list[str]
     bullet_ids: list[str]
@@ -114,6 +125,24 @@ def _fmt_dates(role: Role) -> str:
     return f"{role.start} – {role.end or 'Present'}"
 
 
+def _resume_stints(roles: list[ResumeRole]) -> list[list[ResumeRole]]:
+    """Group selected resume rows by company_id and split into stints, newest first."""
+    groups: dict[str, list[ResumeRole]] = {}
+    order: list[str] = []
+    for r in roles:
+        if r.company_id not in groups:
+            groups[r.company_id] = []
+            order.append(r.company_id)
+        groups[r.company_id].append(r)
+
+    stints: list[list[ResumeRole]] = []
+    for cid in order:
+        stints.extend(split_into_stints(groups[cid], lambda x: x.start, lambda x: x.end))
+
+    stints.sort(key=lambda s: max(month_index(p.start) for p in s), reverse=True)
+    return stints
+
+
 class CareerService:
     def __init__(self, corpus: Corpus) -> None:
         self.corpus = corpus
@@ -129,6 +158,7 @@ class CareerService:
                 RoleSummary(
                     id=r.id,
                     org=r.org,
+                    company_id=r.company_id,
                     title=r.title,
                     start=r.start,
                     end=r.end,
@@ -139,6 +169,10 @@ class CareerService:
                 for r in self.corpus.roles
             ]
         )
+
+    def list_experience(self) -> ExperienceList:
+        """Roles grouped into company tenures (title progressions; gaps split into stints)."""
+        return ExperienceList(companies=group_into_tenures(self.corpus.roles))
 
     def get_role(self, role_id: str) -> Role:
         role = self.corpus.role(role_id)
@@ -277,8 +311,11 @@ class CareerService:
                 ResumeRole(
                     role_id=r.id,
                     org=r.org,
+                    company_id=r.company_id or r.id,
                     title=r.title,
                     dates=_fmt_dates(r),
+                    start=r.start,
+                    end=r.end,
                     location=r.location,
                     bullets=[b.text for b in bullets],
                     bullet_ids=[b.id for b in bullets],
@@ -379,11 +416,32 @@ class CareerService:
             lines.append("")
         if draft.roles:
             lines.append("## Experience")
-            for r in draft.roles:
-                lines.append(f"### {r.title} — {r.org}  ({r.dates})")
-                for b in r.bullets:
-                    lines.append(f"- {b}")
-                lines.append("")
+            for stint in _resume_stints(draft.roles):
+                positions = sorted(
+                    stint, key=lambda p: month_index(p.start), reverse=True
+                )
+                if len(positions) == 1:
+                    p = positions[0]
+                    lines.append(f"### {p.title} — {p.org}  ({p.dates})")
+                    for b in p.bullets:
+                        lines.append(f"- {b}")
+                    lines.append("")
+                else:
+                    # Title progression at one company: a single company header with
+                    # each position nested beneath it.
+                    start = min((p.start for p in positions), key=month_index)
+                    ends = [p.end for p in positions]
+                    end = (
+                        None
+                        if any(e is None for e in ends)
+                        else max((e for e in ends if e), key=month_index)
+                    )
+                    lines.append(f"### {positions[0].org}  ({fmt_range(start, end)})")
+                    for p in positions:
+                        lines.append(f"#### {p.title}  ({p.dates})")
+                        for b in p.bullets:
+                            lines.append(f"- {b}")
+                    lines.append("")
         if draft.projects:
             lines.append("## Projects")
             for p in draft.projects:

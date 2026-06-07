@@ -2,15 +2,18 @@
 # skill is never an unsupported claim. Placeholder content — replace with your own.
 - category: Languages
   skills:
-    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-e1, tp-e2] }
-    - { name: Python, proficiency: proficient, evidence_ids: [tp-e3] }
+    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1] }
+    - { name: Python, proficiency: proficient, evidence_ids: [tp-fs-e2] }
 - category: Frontend
   skills:
-    - { name: React, proficiency: expert, evidence_ids: [tp-e1, tp-e2, tp-portfolio-e1] }
-    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-e2, tp-portfolio-e1] }
+    - { name: React, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, tp-portfolio-e1] }
+    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-fs-e1, tp-portfolio-e1] }
 - category: Backend & Realtime
   skills:
-    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-e1, tp-e3] }
+    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-fe-e1, tp-fs-e2] }
+- category: Leadership
+  skills:
+    - { name: Engineering Leadership, proficiency: proficient, evidence_ids: [tp-ld-e1, tp-ld-e2] }
 - category: AI / Agents
   skills:
     - { name: Model Context Protocol (MCP), proficiency: proficient, evidence_ids: [tp-portfolio-e2] }

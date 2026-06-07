@@ -45,7 +45,8 @@ for both the Claude API MCP-connector path and a raw `ClientSession` path.
 | Tool | Purpose |
 | --- | --- |
 | `get_profile` | Public-safe identity, links, bio |
-| `list_roles` / `get_role` | Browse roles; drill into one (evidence + approved bullets) |
+| `list_roles` / `get_role` | Browse roles (flat); drill into one (evidence + approved bullets) |
+| `list_experience` | Roles grouped into company tenures (title progressions; gaps split into stints) |
 | `list_projects` / `get_project` | Browse/drill into projects |
 | `list_skills` | Skills by category, each backed by evidence |
 | `search_experience` | Rank roles/projects/bullets/skills for a query |

@@ -28,6 +28,36 @@ Each role/project has two lists:
 new facts. The summary line comes from `profile.summary_templates` with `{headline}`,
 `{top_tags}`, and `{name}` filled from corpus values.
 
+## Multiple roles at one company (title progression)
+
+A role is one `(company, title, date-range)` record. To express a progression — e.g. you
+joined as Frontend Developer, became Fullstack Developer, then Lead — create **one role file
+per title** and give them all the same **`company_id`**:
+
+```yaml
+# roles/timeplay-frontend.yaml
+id: timeplay-frontend
+company_id: timeplay        # <-- shared key
+org: TimePlay
+title: Frontend Developer
+start: "2021-03"
+end: "2022-06"
+...
+```
+
+Each title keeps its own `evidence`/`bullets` (what you did *as* that title). Grouping is a
+**render-time** decision:
+
+- `list_roles` returns them flat (each title separately).
+- `list_experience` and `assemble_resume` group them under one company header, newest title
+  first.
+- **Left and came back later?** Use the same `company_id` for both stints. A date gap of
+  more than a month automatically splits them into **two separate tenures** (two company
+  blocks), so it reads correctly without any extra fields. A continuous promotion stays one
+  block.
+
+Roles sharing a `company_id` must use the **same `org`** display name (integrity-checked).
+
 ## Integrity rules (enforced by tests / CI)
 
 - Every id (`role`, `project`, `evidence`, `bullet`) is **unique**.

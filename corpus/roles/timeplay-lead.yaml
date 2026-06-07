@@ -1,0 +1,28 @@
+# TimePlay role 3 of 3 — current role (end: null => Present).
+id: timeplay-lead
+company_id: timeplay
+org: TimePlay
+title: Lead Fullstack Developer
+start: "2023-02"
+end: null
+location: Toronto, CA
+summary: Led the engineering team building TimePlay's interactive experiences.
+tags: [leadership, fullstack, product, 0-to-1]
+
+evidence:
+  - id: tp-ld-e1
+    text: Led a small engineering team and owned technical direction for new product lines.
+    tags: [leadership, product]
+  - id: tp-ld-e2
+    text: Set up code review and release practices and mentored team engineers.
+    tags: [leadership]
+
+bullets:
+  - id: tp-ld-b1
+    text: Led a small engineering team, owning technical direction across new product lines.
+    source_ids: [tp-ld-e1]
+    tags: [leadership, product, 0-to-1]
+  - id: tp-ld-b2
+    text: Established code review and release practices and mentored team engineers.
+    source_ids: [tp-ld-e2]
+    tags: [leadership]
