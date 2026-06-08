@@ -4,7 +4,8 @@ Builds the FastMCP instance, registers tools and the guidance resource, and expo
   * `mcp`  — the FastMCP server (used by `mcp dev` / stdio).
   * `app`  — the middleware-wrapped Streamable-HTTP ASGI app (used by uvicorn in prod).
 
-Run locally (stdio + Inspector):  uv run mcp dev src/nima_career_mcp/server.py
+Run locally (stdio + Inspector):  npx -y @modelcontextprotocol/inspector uv run nima-career-mcp
+                                  (or: uv run mcp dev dev_server.py — see dev_server.py)
 Run HTTP locally:                 uv run nima-career-mcp --transport streamable-http
 Run HTTP in prod (Docker/Fly):    uvicorn nima_career_mcp.server:app --host 0.0.0.0 --port 8080
 """

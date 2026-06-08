@@ -17,8 +17,10 @@ Requires [uv](https://docs.astral.sh/uv/).
 ```bash
 uv sync --all-extras --dev
 
-# Interactive dev + MCP Inspector (stdio):
-uv run mcp dev src/nima_career_mcp/server.py
+# Interactive dev + MCP Inspector (stdio). Requires Node/npx:
+npx -y @modelcontextprotocol/inspector uv run nima-career-mcp
+# (equivalent via the SDK dev wrapper, using the root shim — see note below:)
+uv run mcp dev dev_server.py
 
 # Or run the HTTP server locally:
 uv run nima-career-mcp --transport streamable-http   # serves http://127.0.0.1:8080/mcp
@@ -26,6 +28,11 @@ uv run nima-career-mcp --transport streamable-http   # serves http://127.0.0.1:8
 # Tests (includes corpus integrity + the honesty guarantee):
 uv run pytest -q
 ```
+
+> **Why `dev_server.py`?** `mcp dev` imports its target file *by path*, which strips the
+> package context and breaks this src-layout package's relative imports. `dev_server.py` is
+> a one-line shim that re-imports the server via an absolute import so `mcp dev` works. The
+> `npx … uv run nima-career-mcp` form spawns the installed entry point and needs no shim.
 
 ## Connecting clients
 
