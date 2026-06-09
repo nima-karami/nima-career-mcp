@@ -1,32 +1,50 @@
-# TimePlay role 2 of 3 — continues directly from the frontend role (same company_id).
 id: timeplay-fullstack
 company_id: timeplay
 org: TimePlay
-title: Fullstack Developer
-start: "2022-06"
-end: "2023-02"
-location: Toronto, CA
-summary: Extended the platform across the stack and built operator tooling.
-tags: [fullstack, product, design, frontend, backend, realtime]
+title: Full-Stack Developer
+start: "2023-08"
+end: "2024-08"
+location: Toronto, Ontario, Canada
+summary: >-
+  Full-stack developer across the gaming platform's player-facing web clients and its
+  Node and Go backend services.
+tags: [full-stack, frontend, backend, gameplay, payments]
 
 evidence:
-  - id: tp-fs-e1
-    text: Designed and shipped the host-control dashboard operators used to run live shows.
-    tags: [product, design, frontend]
-  - id: tp-fs-e2
-    text: Cut median round-trip latency of the realtime sync layer through protocol tuning.
+  - id: tpf-e1
+    text: >-
+      Owned the Wheel of Fortune multi-package purchase flow in the player-facing SPA and
+      built its phone-based puzzle-solve gameplay feature end to end (solve screen,
+      submit / lock logic, real-time state events).
+    tags: [frontend, gameplay, ownership]
+  - id: tpf-e2
+    text: >-
+      Extended a Node.js / Express + MongoDB payments service from a single cruise line to
+      multiple partners: partner-aware payment routing, a filterable transactions
+      endpoint, and hardened guest-inquiry validation, via SOAP integrations to the lines'
+      financial systems.
+    tags: [backend, payments, node, integration]
+  - id: tpf-e3
+    text: Wheel of Fortune reaches over 35,000 players per year.
     metrics:
-      - { label: "latency reduction", value: "~40%" }
-    tags: [realtime, backend, performance]
+      - label: players per year
+        value: "35,000+"
+    tags: [scale]
 
 bullets:
-  - id: tp-fs-b1
-    text: Designed and built the operator dashboard for running live interactive shows.
-    source_ids: [tp-fs-e1]
-    tags: [product, design, frontend]
-  - id: tp-fs-b2
-    text: Reduced realtime sync latency ~40% via protocol tuning, smoothing live gameplay.
+  - id: tpf-b1
+    text: >-
+      Owned the Wheel of Fortune purchase flow and built its phone-based puzzle-solve
+      gameplay end to end, for a game reaching 35,000+ players a year.
     metrics:
-      - { label: "latency reduction", value: "~40%" }
-    source_ids: [tp-fs-e2]
-    tags: [realtime, performance, backend]
+      - label: players per year
+        value: "35,000+"
+    source_ids: [tpf-e1, tpf-e3]
+    tags: [frontend, gameplay]
+  - id: tpf-b2
+    text: >-
+      Extended a Node / Express + MongoDB payments service from one cruise line to multiple
+      partners, adding partner-aware payment routing, a filterable transactions endpoint,
+      and validation hardening.
+    source_ids: [tpf-e2]
+    tags: [backend, payments, node]

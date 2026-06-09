@@ -1,21 +1,22 @@
-# Public-safe profile. NO secrets, NO private contact details beyond your stated policy.
-# Placeholder content — replace with your curated facts.
+# Public-safe profile. NO secrets, NO private contact details beyond the stated policy.
 name: Nima Karami
-headline: Design / Product Engineer
-location: Toronto, CA
+headline: Design Engineer / Product Engineer
+location: Toronto, Ontario, Canada
 links:
-  website: https://example.com
-  github: https://github.com/your-handle
-  linkedin: https://www.linkedin.com/in/your-handle
+  website: https://www.nima-karami.com
+  github: https://github.com/nima-karami
+  linkedin: https://www.linkedin.com/in/nima-karami
 bio: >-
-  Design-minded product engineer who builds 0-to-1 products end to end — from interaction
-  design through shipped, production software. Comfortable across the stack with a bias
-  toward fast, tasteful iteration.
+  Design engineer / product engineer who builds 0-to-1 products end to end, from
+  interaction design through shipped, production software. Trained as an architect
+  (Master of Architecture), I moved into software and kept the architect's habit of
+  holding a messy, multi-dimensional problem until a single clear line appears. I work
+  across the full stack with a bias toward design taste, product judgment, and an
+  AI-native workflow.
 
-# Approved skeleton lines used to assemble a resume summary. Only {headline}, {top_tags},
-# and {name} are substituted — all from corpus values. No free-form generation at runtime.
+# Only {headline}, {top_tags}, and {name} are substituted, all from corpus values.
 summary_templates:
-  - "{headline} focused on {top_tags}."
-  - "{headline} with hands-on experience across {top_tags}."
+  - "{headline} who builds 0-to-1 products end to end, across {top_tags}."
+  - "Trained as an architect, now a {headline} working across {top_tags} with a bias toward design taste and product judgment."
 
-contact_policy: "Reach out via the website contact form."
+contact_policy: "Reach out through the website or LinkedIn."

@@ -1,0 +1,34 @@
+id: career-mcp
+name: Career MCP + terminal portfolio
+blurb: >-
+  This server: a public, read-only Model Context Protocol server over a vetted,
+  honesty-by-construction career corpus, powering a terminal-style portfolio where
+  visitors chat about my work and request tailored resume drafts (Python, Streamable
+  HTTP, deployed on Fly.io).
+tags: [mcp, python, ai-native, open-source, design-engineering]
+
+evidence:
+  - id: cm-e1
+    text: >-
+      Designed and built a public, read-only MCP server (Python, FastMCP, Streamable HTTP)
+      over a vetted career corpus, enforcing honesty-by-construction so it can only ever
+      return curated data, and deployed it on Fly.io.
+    tags: [mcp, python, ai-native, open-source]
+  - id: cm-e2
+    text: >-
+      Hardened the public endpoint with rate limiting, body-size caps, and Origin / Host
+      validation, plus a Pydantic integrity layer that fails closed on malformed data.
+    tags: [security, backend, python]
+
+bullets:
+  - id: cm-b1
+    text: >-
+      Built a public, read-only MCP server over a vetted career corpus with
+      honesty-by-construction guarantees, powering a terminal-style AI portfolio (Python,
+      Streamable HTTP, Fly.io).
+    source_ids: [cm-e1]
+    tags: [mcp, ai-native, open-source]
+
+links:
+  - label: GitHub
+    url: https://github.com/nima-karami/nima-career-mcp

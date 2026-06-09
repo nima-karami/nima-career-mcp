@@ -1,26 +1,52 @@
-# TimePlay role 1 of 3 — a title progression sharing company_id: timeplay.
-# Placeholder content; replace evidence/bullets with your vetted facts.
 id: timeplay-frontend
 company_id: timeplay
 org: TimePlay
 title: Frontend Developer
-start: "2021-03"
-end: "2022-06"
-location: Toronto, CA
-summary: Built the audience-facing second-screen gameplay client.
-tags: [frontend, realtime, 0-to-1]
+start: "2022-08"
+end: "2023-08"
+location: Toronto, Ontario, Canada
+summary: >-
+  Frontend developer who introduced React to the company to build its first
+  WCAG/ADA-accessible game experiences.
+tags: [frontend, react, accessibility, 0-to-1, technical-direction]
 
 evidence:
-  - id: tp-fe-e1
-    text: Built the live second-screen gameplay client used by audiences in theaters.
+  - id: tpfe-e1
+    text: >-
+      Introduced React into the company's stack to deliver its first WCAG/ADA-accessible
+      game experiences, replacing a canvas game engine that could not be made accessible,
+      to meet a partner's legal accessibility requirements.
+    tags: [react, accessibility, technical-direction, 0-to-1]
+  - id: tpfe-e2
+    text: >-
+      Was the primary engineer end to end on all six accessible mobile game controllers in
+      the accessibility suite (React + Tailwind), passing a third-party accessibility audit
+      and partner sign-off.
+    tags: [accessibility, ownership, react]
+  - id: tpfe-e3
+    text: >-
+      The accessible trivia controllers serve over 600,000 players per year, and the
+      accessible controller became the default used even for other partners.
     metrics:
-      - { label: venues, value: "40+" }
-    tags: [0-to-1, realtime, frontend]
+      - label: players per year
+        value: "600,000+"
+    tags: [scale, product, accessibility]
 
 bullets:
-  - id: tp-fe-b1
-    text: Built a 0-to-1 realtime second-screen gameplay client deployed to 40+ live venues.
+  - id: tpfe-b1
+    text: >-
+      Introduced React to the company to build its first WCAG/ADA-accessible game
+      experiences, replacing an inaccessible canvas engine to meet a partner's legal
+      requirements.
+    source_ids: [tpfe-e1]
+    tags: [react, accessibility, technical-direction]
+  - id: tpfe-b2
+    text: >-
+      Was primary engineer on all six accessible mobile game controllers, passing a
+      third-party audit; they reach 600,000+ players a year and became the default
+      controller across partners.
     metrics:
-      - { label: venues, value: "40+" }
-    source_ids: [tp-fe-e1]
-    tags: [0-to-1, frontend, realtime]
+      - label: players per year
+        value: "600,000+"
+    source_ids: [tpfe-e2, tpfe-e3]
+    tags: [accessibility, ownership]

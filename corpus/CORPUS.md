@@ -72,4 +72,5 @@ Run `uv run pytest tests/test_corpus_integrity.py` after editing; CI runs it on 
 - Dates are `"YYYY-MM"` strings (quote them). Use `end: null` for a current role.
 - `tags` drive search and resume tailoring — use a consistent vocabulary
   (e.g. `0-to-1`, `product`, `frontend`, `backend`, `realtime`, `design`, `ai`).
-- The shipped files are **placeholders** — replace TimePlay/portfolio content with yours.
+- Content is **public-safe and sanitized**: every claim traces to vetted evidence;
+  individuals, internal codenames, and private partner details are generalized.

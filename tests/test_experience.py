@@ -10,22 +10,24 @@ from nima_career_mcp.service import CareerService
 def test_progression_groups_into_one_tenure(service: CareerService) -> None:
     exp = service.list_experience()
     timeplay = next(c for c in exp.companies if c.company_id == "timeplay")
-    # All three titles collapse into a single continuous tenure...
+    # All three TimePlay titles collapse into a single continuous tenure...
     assert len(timeplay.positions) == 3
     # ...ordered newest-first, and still "Present" because the lead role is open-ended.
-    assert timeplay.positions[0].title == "Lead Fullstack Developer"
+    assert timeplay.positions[0].title == "Lead Full-Stack Developer"
     assert timeplay.end is None
-    assert timeplay.start == "2021-03"
+    assert timeplay.start == "2022-08"
 
 
-def test_seed_studio_atlas_is_two_tenures(service: CareerService) -> None:
-    # The seed has a Studio Atlas internship (2015) and a later contract (2017); the gap
-    # makes them two separate tenures even though they share a company_id.
+def test_distinct_companies_are_separate_tenures(service: CareerService) -> None:
+    # Roles without a shared company_id each stand alone; YOURS is its own open-ended tenure.
     exp = service.list_experience()
-    studio = [c for c in exp.companies if c.company_id == "studio-atlas"]
-    assert len(studio) == 2
-    # Newest tenure (the 2017 contract) sorts ahead of the 2015 internship.
-    starts = [c.start for c in studio]
+    company_ids = {c.company_id for c in exp.companies}
+    assert {"timeplay", "yours"}.issubset(company_ids)
+    yours = next(c for c in exp.companies if c.company_id == "yours")
+    assert len(yours.positions) == 1
+    assert yours.end is None
+    # Newest tenure sorts first overall.
+    starts = [c.start for c in exp.companies]
     assert starts == sorted(starts, reverse=True)
 
 
@@ -69,5 +71,5 @@ def test_resume_markdown_groups_company_positions(service: CareerService) -> Non
     md = draft.markdown or ""
     # One company header for TimePlay, with each title nested beneath it.
     assert md.count("### TimePlay") == 1
-    for title in ("Lead Fullstack Developer", "Fullstack Developer", "Frontend Developer"):
+    for title in ("Lead Full-Stack Developer", "Full-Stack Developer", "Frontend Developer"):
         assert title in md

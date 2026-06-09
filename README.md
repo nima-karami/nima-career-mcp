@@ -67,8 +67,10 @@ its system prompt. (Other `career://` resources and prompt templates are stubbed
 
 All data lives in [`corpus/`](corpus/) as curated YAML and is validated at startup. See
 [`corpus/CORPUS.md`](corpus/CORPUS.md) for the schema and the evidence→bullet model. The
-shipped content is **placeholder** — replace it with your own vetted facts. This repo holds
-**no secrets and no private data**; application tracking lives in a separate private repo.
+content is a **public-safe, sanitized** view of real experience: every claim traces to vetted
+evidence, and individuals, internal codenames, and private partner details are deliberately
+generalized. This repo holds **no secrets and no private data**; application tracking lives in
+a separate private repo.
 
 ## Safety posture
 

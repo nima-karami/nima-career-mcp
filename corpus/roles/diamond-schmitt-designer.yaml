@@ -1,0 +1,26 @@
+# Stub role: title/dates are confirmed; evidence is high-level pending detail from Nima.
+id: diamond-schmitt-designer
+org: Diamond Schmitt Architects
+title: Architectural & Computational Designer
+start: "2021-01"
+end: "2021-09"
+location: Toronto, Ontario, Canada
+summary: >-
+  Architectural and computational designer applying parametric and computational methods
+  to building design.
+tags: [architecture, computational-design, design, foundations]
+
+evidence:
+  - id: ds-e1
+    text: >-
+      Worked as an architectural and computational designer at an architecture practice,
+      applying parametric and computational design methods to building projects.
+    tags: [architecture, computational-design, design]
+
+bullets:
+  - id: ds-b1
+    text: >-
+      Applied computational and parametric design methods to building projects as an
+      architectural designer.
+    source_ids: [ds-e1]
+    tags: [architecture, computational-design]

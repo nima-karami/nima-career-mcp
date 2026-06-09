@@ -1,0 +1,77 @@
+id: yours-founder
+company_id: yours
+org: YOURS
+title: Founder
+start: "2025-01"
+end: null
+location: Toronto, Ontario, Canada
+summary: >-
+  Solo founder building a browser-based custom-apparel design studio and print-on-demand
+  storefront. Validated the problem and sharpened positioning through customer research.
+tags: [founder, 0-to-1, full-stack, design-engineering, product, ai]
+
+evidence:
+  - id: yrs-e1
+    text: >-
+      Founded and solo-built YOURS, a browser-based real-time custom-apparel design
+      studio: users design on a 2D canvas, see it composited live onto a 3D garment, and
+      order through a print-on-demand storefront (React 19, TypeScript, Three.js / React
+      Three Fiber, Konva, Stripe, Printful).
+    tags: [founder, 0-to-1, full-stack, design-engineering]
+  - id: yrs-e2
+    text: >-
+      Architected a real-time 2D-to-3D design pipeline that composites user canvas designs
+      onto textured 3D garment models at up to 4K, client-side with no server round-trips
+      during editing, a differentiated live-preview experience.
+    tags: [graphics, three.js, performance, craft]
+  - id: yrs-e3
+    text: >-
+      Ran 25+ customer-discovery conversations across two rounds, surfaced the segment
+      split between creatives and non-creatives ("blank-canvas anxiety"), and committed the
+      product to a gift-giver wedge.
+    metrics:
+      - label: customer conversations
+        value: "25+"
+    tags: [product, customer-research, positioning]
+  - id: yrs-e4
+    text: >-
+      Prototyped a conversational AI design concierge that extracts a structured design
+      spec from natural dialogue and fans out to AI image generation, as the on-ramp for
+      non-creative users.
+    tags: [ai, product, design, prototype]
+  - id: yrs-e5
+    text: >-
+      Wired a print-on-demand commerce path (Stripe payments, Printful fulfillment, GeoIP
+      multi-currency pricing, live shipping quotes, print-file generation) to demonstrate
+      the purchase experience.
+    tags: [ecommerce, integration, stripe]
+
+bullets:
+  - id: yrs-b1
+    text: >-
+      Founded and solo-built YOURS, a real-time custom-apparel design studio with live
+      2D-to-3D preview and a print-on-demand storefront (React 19, Three.js, Stripe,
+      Printful).
+    source_ids: [yrs-e1, yrs-e2]
+    tags: [founder, 0-to-1, design-engineering]
+  - id: yrs-b2
+    text: >-
+      Architected a client-side 2D-to-3D compositing pipeline rendering user designs onto
+      3D garments at up to 4K with no server round-trips during editing.
+    source_ids: [yrs-e2]
+    tags: [graphics, performance]
+  - id: yrs-b3
+    text: >-
+      Ran 25+ customer-discovery interviews, identified the creative / non-creative segment
+      split, and committed the product to a gift-giver wedge.
+    metrics:
+      - label: customer conversations
+        value: "25+"
+    source_ids: [yrs-e3]
+    tags: [product, customer-research, positioning]
+  - id: yrs-b4
+    text: >-
+      Prototyped a conversational AI design concierge that turns a natural-language brief
+      into print-ready artwork via AI image generation.
+    source_ids: [yrs-e4]
+    tags: [ai, product, design]

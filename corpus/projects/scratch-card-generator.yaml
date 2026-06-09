@@ -1,0 +1,56 @@
+id: scratch-card-generator
+name: AI-native game-asset pipeline
+role_id: timeplay-lead
+blurb: >-
+  Prompt-to-playable scratch-card game generator: an LLM creative director designs a
+  visual identity, a multimodal pipeline generates every asset, a vision-LLM QA loop
+  repairs them, and the result is composed into a playable React game. Built solo in
+  ~3 weeks with agentic coding; the demo that launched the company's internal AI
+  initiative.
+tags: [ai, multimodal, pipeline, react, agentic, evals, 0-to-1]
+
+evidence:
+  - id: scg-e1
+    text: >-
+      Built an end-to-end prompt-to-playable pipeline that turns one text theme into a
+      complete scratch-card game, solo in ~3 weeks with agentic coding; it became the
+      proof-of-concept that launched the company's internal AI initiative.
+    tags: [ai, pipeline, agentic, 0-to-1]
+  - id: scg-e2
+    text: >-
+      Designed a two-phase LLM "creative director" (structured art-direction JSON, then a
+      moodboard-anchored element spec) to keep a dozen independently generated assets
+      stylistically coherent.
+    tags: [ai, llm, design-systems]
+  - id: scg-e3
+    text: >-
+      Engineered an automated QA-and-repair loop combining an algorithmic frame validator
+      and a vision-LLM critic that returns grid-coordinate edit instructions, surgically
+      editing failed assets instead of regenerating.
+    tags: [ai, qa, vision-llm, evals]
+  - id: scg-e4
+    text: >-
+      Architected a Redis-backed job pipeline (Express 5 + BullMQ) with a three-stage
+      worker, live Server-Sent-Events progress, back-pressure, and disk-based restart
+      recovery.
+    tags: [backend, queue, real-time]
+
+bullets:
+  - id: scg-b1
+    text: >-
+      Built, solo with agentic coding in ~3 weeks, a prompt-to-playable game-asset
+      pipeline that became the demo launching the company's internal AI initiative.
+    source_ids: [scg-e1]
+    tags: [ai, agentic, 0-to-1]
+  - id: scg-b2
+    text: >-
+      Designed a two-phase LLM creative director and an automated vision-LLM QA-and-repair
+      loop to keep a multimodal asset set coherent and self-correcting.
+    source_ids: [scg-e2, scg-e3]
+    tags: [ai, evals, vision-llm]
+  - id: scg-b3
+    text: >-
+      Architected a Redis / BullMQ job pipeline with live SSE progress, back-pressure, and
+      restart recovery feeding a playable React 19 front end.
+    source_ids: [scg-e4]
+    tags: [backend, real-time]

@@ -1,0 +1,20 @@
+# Stub role: title/dates are confirmed; evidence is high-level pending detail from Nima.
+id: functionland-ux
+org: Functionland
+title: UX Designer
+start: "2021-09"
+end: "2022-08"
+location: Toronto, Ontario, Canada
+summary: UX designer producing user flows and interface designs for a technology product.
+tags: [ux, design, product]
+
+evidence:
+  - id: fl-e1
+    text: Worked as a UX designer, producing user flows and interface designs for a technology product.
+    tags: [ux, design]
+
+bullets:
+  - id: fl-b1
+    text: Designed user flows and interfaces as a UX designer on a technology product.
+    source_ids: [fl-e1]
+    tags: [ux, design]

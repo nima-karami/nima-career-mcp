@@ -1,28 +1,130 @@
-# TimePlay role 3 of 3 — current role (end: null => Present).
 id: timeplay-lead
 company_id: timeplay
 org: TimePlay
-title: Lead Fullstack Developer
-start: "2023-02"
+title: Lead Full-Stack Developer
+start: "2024-08"
 end: null
-location: Toronto, CA
-summary: Led the engineering team building TimePlay's interactive experiences.
-tags: [leadership, fullstack, product, 0-to-1]
+location: Toronto, Ontario, Canada
+summary: >-
+  Lead full-stack developer on a real-money cruise-line gaming platform. Originated and
+  built the bulk of its flagship web client, owned product and design on key games, and
+  led a cross-functional team from kickoff through launch.
+tags: [leadership, full-stack, product, design, frontend, 0-to-1, real-money, ai-native]
 
 evidence:
-  - id: tp-ld-e1
-    text: Led a small engineering team and owned technical direction for new product lines.
-    tags: [leadership, product]
-  - id: tp-ld-e2
-    text: Set up code review and release practices and mentored team engineers.
-    tags: [leadership]
+  - id: tpl-e1
+    text: >-
+      Originated and built the bulk of a real-money gaming web client (React 18,
+      TypeScript, Vite) for cruise-line partners, from the first commit through multiple
+      production launches; the largest individual code contributor to the codebase.
+    tags: [frontend, ownership, 0-to-1, react, typescript]
+  - id: tpl-e2
+    text: >-
+      Created the real-money lottery and instant-win web client whose launch drove a
+      +21% gross-revenue lift for the cruise-line partner.
+    metrics:
+      - label: partner gross-revenue lift
+        value: "+21%"
+    tags: [product, revenue, 0-to-1]
+  - id: tpl-e3
+    text: >-
+      Built the lottery storefront, which converts at 35%, well above typical storefront
+      benchmarks.
+    metrics:
+      - label: storefront conversion
+        value: "35%"
+    tags: [product, conversion, ecommerce]
+  - id: tpl-e4
+    text: >-
+      Designed and built a partner-configuration system (feature flags, behavior, copy,
+      and theming from a single source of truth) that serves seven major cruise-line
+      brands without forking the codebase.
+    metrics:
+      - label: cruise-line brands served
+        value: "7"
+    tags: [architecture, configuration, white-label, scale]
+  - id: tpl-e5
+    text: >-
+      Owned the UX and product of a Deal or No Deal mobile game end to end: designed the
+      full flow in Figma, implemented the front end, and shipped it. The mobile launch
+      increased players and gross revenue by 12%.
+    metrics:
+      - label: players and gross revenue
+        value: "+12%"
+    tags: [design, product, figma, frontend, revenue]
+  - id: tpl-e6
+    text: >-
+      Built a full-stack product-analytics system: a client-side event pipeline
+      (buffer / flush / retry) instrumented across the app, plus a batch
+      activity-ingestion endpoint (Go, Gin, GORM / Postgres) with PII masking, and
+      authored its documentation.
+    tags: [analytics, full-stack, go, instrumentation, documentation]
+  - id: tpl-e7
+    text: >-
+      Led a cross-functional team of up to seven developers (junior, contract, game, and
+      backend developers) building the flagship web client from kickoff through its
+      initial launch.
+    tags: [leadership, team]
+  - id: tpl-e8
+    text: >-
+      Built agent-operable engineering tooling: CLI-driven pipelines and an agentic
+      pull-request review workflow that returns structured review reports, plus reusable
+      machine-readable instructions ("skills") for coding agents shared with teammates.
+    tags: [ai-native, tooling, agents, developer-experience]
 
 bullets:
-  - id: tp-ld-b1
-    text: Led a small engineering team, owning technical direction across new product lines.
-    source_ids: [tp-ld-e1]
-    tags: [leadership, product, 0-to-1]
-  - id: tp-ld-b2
-    text: Established code review and release practices and mentored team engineers.
-    source_ids: [tp-ld-e2]
+  - id: tpl-b1
+    text: >-
+      Originated and built the bulk of a real-money cruise-line gaming web client
+      (React / TypeScript) from the first commit through multiple production launches, as
+      the largest individual contributor to the codebase.
+    source_ids: [tpl-e1]
+    tags: [frontend, ownership, 0-to-1]
+  - id: tpl-b2
+    text: >-
+      Created a real-money lottery web client and storefront whose launch drove a +21%
+      gross-revenue lift for the partner, at a 35% storefront conversion rate.
+    metrics:
+      - label: partner gross-revenue lift
+        value: "+21%"
+      - label: storefront conversion
+        value: "35%"
+    source_ids: [tpl-e2, tpl-e3]
+    tags: [product, revenue, conversion, 0-to-1]
+  - id: tpl-b3
+    text: >-
+      Designed and built a partner-configuration system (feature flags, behavior, copy,
+      and theming from one source of truth) serving seven major cruise-line brands
+      without forking the codebase.
+    metrics:
+      - label: cruise-line brands served
+        value: "7"
+    source_ids: [tpl-e4]
+    tags: [architecture, configuration, scale]
+  - id: tpl-b4
+    text: >-
+      Led the UX, front end, and product of a Deal or No Deal mobile game from Figma
+      through production; the launch lifted players and gross revenue 12%.
+    metrics:
+      - label: players and gross revenue
+        value: "+12%"
+    source_ids: [tpl-e5]
+    tags: [design, product, frontend]
+  - id: tpl-b5
+    text: >-
+      Built a full-stack product-analytics system, a client event pipeline plus a Go
+      ingestion endpoint with PII masking, and wrote its documentation.
+    source_ids: [tpl-e6]
+    tags: [analytics, full-stack, go]
+  - id: tpl-b6
+    text: >-
+      Led a cross-functional team of up to seven developers building the flagship client
+      from kickoff through its initial launch.
+    source_ids: [tpl-e7]
     tags: [leadership]
+  - id: tpl-b7
+    text: >-
+      Built agent-operable tooling: CLI pipelines, an agentic PR-review workflow that
+      produces structured reports, and reusable machine-readable docs for coding agents.
+    source_ids: [tpl-e8]
+    tags: [ai-native, agents, tooling]

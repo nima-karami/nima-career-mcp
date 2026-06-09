@@ -1,0 +1,42 @@
+id: yours-design-studio
+name: YOURS apparel design studio
+role_id: yours-founder
+blurb: >-
+  Browser-based real-time custom-apparel design studio with live 2D-to-3D preview and a
+  print-on-demand storefront (React 19, Three.js / R3F, Konva, Stripe, Printful).
+tags: [react, three.js, design-engineering, ai, ecommerce, 0-to-1]
+
+evidence:
+  - id: ysd-e1
+    text: >-
+      Designed a plugin-based product system (product / tool / template registries) that
+      decouples products, design tools, and print geometry from the rendering engine, so
+      adding a product or tool needs only a self-contained plugin definition.
+    tags: [architecture, extensibility]
+  - id: ysd-e2
+    text: >-
+      Built an async, queue-based offscreen rendering engine (Konva) that decouples
+      expensive raster generation from React renders to eliminate UI jank during live
+      editing.
+    tags: [performance, rendering]
+  - id: ysd-e3
+    text: >-
+      Engineered a client-side image-persistence layer over IndexedDB with origin-tagged
+      virtual URLs, a blob-URL cache, orphan garbage collection, and versioned schema
+      migrations to keep user-generated image data bounded.
+    tags: [storage, indexeddb, performance]
+
+bullets:
+  - id: ysd-b1
+    text: >-
+      Built a plugin-based product architecture decoupling products, tools, and print
+      geometry from the 3D rendering engine.
+    source_ids: [ysd-e1]
+    tags: [architecture]
+  - id: ysd-b2
+    text: >-
+      Engineered an async offscreen render pipeline and an IndexedDB image-persistence
+      layer (virtual URLs, orphan GC, versioned migrations) to keep editing smooth and
+      storage bounded.
+    source_ids: [ysd-e2, ysd-e3]
+    tags: [performance, storage]

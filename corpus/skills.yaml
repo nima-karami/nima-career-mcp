@@ -1,27 +1,29 @@
-# Skills grouped by category. Each skill SHOULD link the evidence ids that back it, so a
-# skill is never an unsupported claim. Placeholder content — replace with your own.
-- category: Languages
+# Skills grouped by category. Each skill links the evidence ids that back it, so a skill is
+# never an unsupported claim.
+- category: Engineering
   skills:
-    - { name: TypeScript, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, nw-e1, sa-co-e1] }
-    - { name: Python, proficiency: proficient, evidence_ids: [tp-fs-e2, cli-e1] }
-    - { name: JavaScript, proficiency: expert, evidence_ids: [sa-in-e1, sa-co-e1] }
-- category: Frontend
+    - { name: TypeScript, proficiency: expert, evidence_ids: [tpl-e1, yrs-e1, scg-e1] }
+    - { name: React, proficiency: expert, evidence_ids: [tpl-e1, tpfe-e1, yrs-e1] }
+    - { name: Node.js / Express, proficiency: proficient, evidence_ids: [tpf-e2, scg-e4] }
+    - { name: Go, proficiency: proficient, evidence_ids: [tpl-e6] }
+    - { name: Python, proficiency: proficient, evidence_ids: [cm-e1, cm-e2] }
+    - { name: Three.js / React Three Fiber, proficiency: proficient, evidence_ids: [yrs-e2] }
+    - { name: Frontend architecture & performance, proficiency: expert, evidence_ids: [tpl-e1, ysd-e2, ysd-e3] }
+    - { name: Real-time systems & job queues, proficiency: proficient, evidence_ids: [scg-e4] }
+    - { name: Web accessibility (WCAG / ADA), proficiency: proficient, evidence_ids: [tpfe-e1, tpfe-e2] }
+- category: Product & Design
   skills:
-    - { name: React, proficiency: expert, evidence_ids: [tp-fe-e1, tp-fs-e1, nw-e1, rw-e1, tp-portfolio-e1] }
-    - { name: Interaction Design, proficiency: expert, evidence_ids: [tp-fs-e1, nw-e1, tp-portfolio-e1] }
-    - { name: Design Systems, proficiency: proficient, evidence_ids: [nw-e2, dsk-e1] }
-    - { name: Accessibility, proficiency: proficient, evidence_ids: [dsk-e1] }
-- category: Backend & Realtime
+    - { name: Product discovery & customer research, proficiency: proficient, evidence_ids: [yrs-e3] }
+    - { name: UX / interaction design (Figma), proficiency: expert, evidence_ids: [tpl-e5, fl-e1] }
+    - { name: 0-to-1 product & positioning, proficiency: proficient, evidence_ids: [yrs-e3, tpl-e2] }
+    - { name: Product analytics & instrumentation, proficiency: proficient, evidence_ids: [tpl-e6] }
+- category: AI-Native
   skills:
-    - { name: WebSockets / Realtime sync, proficiency: proficient, evidence_ids: [tp-fe-e1, tp-fs-e2, rw-e1] }
-    - { name: Payments integration, proficiency: familiar, evidence_ids: [sa-co-e2] }
-    - { name: CLIs / Developer tooling, proficiency: proficient, evidence_ids: [cli-e1] }
-- category: Data
+    - { name: LLM & multimodal pipelines, proficiency: proficient, evidence_ids: [scg-e2, yrs-e4] }
+    - { name: AI evals & vision-LLM QA, proficiency: proficient, evidence_ids: [scg-e3] }
+    - { name: Agentic / AI-assisted development, proficiency: expert, evidence_ids: [scg-e1, tpl-e8] }
+    - { name: Model Context Protocol (MCP) & agent tooling, proficiency: proficient, evidence_ids: [cm-e1, tpl-e8] }
+- category: Foundations
   skills:
-    - { name: Data Visualization, proficiency: proficient, evidence_ids: [nw-e1] }
-- category: Leadership
-  skills:
-    - { name: Engineering Leadership, proficiency: proficient, evidence_ids: [tp-ld-e1, tp-ld-e2] }
-- category: AI / Agents
-  skills:
-    - { name: Model Context Protocol (MCP), proficiency: proficient, evidence_ids: [tp-portfolio-e2] }
+    - { name: Computational & parametric design, proficiency: proficient, evidence_ids: [ds-e1] }
+    - { name: Architecture (M.Arch), proficiency: expert, evidence_ids: [ds-e1] }
