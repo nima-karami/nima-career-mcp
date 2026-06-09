@@ -11,6 +11,11 @@ primary_region = "yyz"          # Toronto; change as desired
   # Comma-separated origin allowlist. Empty = allow any origin (public server).
   # Set this to your website origin(s) if you want to restrict browser callers.
   NIMA_ALLOWED_ORIGINS = ""
+  # Comma-separated Host allowlist (DNS-rebinding defense). Empty = allow any Host
+  # (public server). Lock it down by listing your hostname(s), e.g.
+  # "nima-career-mcp.fly.dev". A trailing ":*" allows any port. Leave empty if you
+  # plan to attach custom domains.
+  NIMA_ALLOWED_HOSTS = ""
   # Per-IP requests per minute (rate limit). Tune for expected traffic.
   NIMA_RATE_LIMIT_PER_MIN = "60"
 

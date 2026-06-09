@@ -16,12 +16,14 @@ import argparse
 import os
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 from starlette.types import ASGIApp
 
 from .corpus import load_corpus
 from .resources import register_resources
 from .security import (
     BodySizeLimitMiddleware,
+    HostValidationMiddleware,
     OriginValidationMiddleware,
     RateLimitMiddleware,
 )
@@ -42,11 +44,20 @@ def build_server() -> tuple[FastMCP, CareerService]:
     service = CareerService(corpus)
 
     # Stateless HTTP: no sessions needed for a read-only corpus; scales horizontally.
+    #
+    # FastMCP auto-enables localhost-only Host validation (DNS-rebinding defense) whenever it
+    # thinks it's bound to localhost — which 421s every request once deployed behind a real
+    # hostname (e.g. *.fly.dev). This is an intentionally PUBLIC server, so we turn that
+    # built-in off and own the host/origin policy ourselves in build_http_app's middleware
+    # (env-driven, "empty allowlist = public"). See security.py.
     mcp = FastMCP(
         "Nima Career",
         instructions=INSTRUCTIONS,
         stateless_http=True,
         json_response=True,
+        transport_security=TransportSecuritySettings(
+            enable_dns_rebinding_protection=False
+        ),
     )
     register_all(mcp, service)
     register_resources(mcp, service)
@@ -60,10 +71,14 @@ def build_http_app(mcp: FastMCP) -> ASGIApp:
     allowed = [
         o for o in os.environ.get("NIMA_ALLOWED_ORIGINS", "").split(",") if o.strip()
     ]
+    hosts = [
+        h for h in os.environ.get("NIMA_ALLOWED_HOSTS", "").split(",") if h.strip()
+    ]
     rate = int(os.environ.get("NIMA_RATE_LIMIT_PER_MIN", "60"))
 
     inner: ASGIApp = mcp.streamable_http_app()  # serves the MCP endpoint at /mcp
     inner = OriginValidationMiddleware(inner, allowed_origins=allowed)
+    inner = HostValidationMiddleware(inner, allowed_hosts=hosts)
     inner = BodySizeLimitMiddleware(inner)
     inner = RateLimitMiddleware(inner, limit_per_min=rate)
     return inner

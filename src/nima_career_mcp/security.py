@@ -118,3 +118,42 @@ class OriginValidationMiddleware:
             await self.app(scope, receive, send)
             return
         await _send_error(send, 403, "Origin not allowed.")
+
+
+class HostValidationMiddleware:
+    """Validate the Host header against an allowlist (DNS-rebinding defense).
+
+    The MCP SDK ships its own Host check but only auto-enables it for localhost binds, where
+    it then 421s any real deployed hostname. We disable the SDK's copy (see server.py) and
+    own the policy here so it follows the same "empty allowlist = public" semantics as the
+    rest of this layer: with NIMA_ALLOWED_HOSTS unset, any Host passes (intentionally public
+    server). Set NIMA_ALLOWED_HOSTS to your deploy hostname(s) to lock it down — e.g.
+    `nima-career-mcp.fly.dev`. A trailing `:*` allows any port (e.g. `localhost:*`).
+    """
+
+    def __init__(self, app: ASGIApp, allowed_hosts: list[str] | None = None) -> None:
+        self.app = app
+        self.allowed = {h.strip() for h in (allowed_hosts or []) if h.strip()}
+
+    def _ok(self, host: str) -> bool:
+        if host in self.allowed:
+            return True
+        # Wildcard-port patterns: "example.com:*" matches "example.com:8080".
+        for pattern in self.allowed:
+            if pattern.endswith(":*") and host.startswith(pattern[:-1]):
+                return True
+        return False
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] != "http" or not self.allowed:
+            await self.app(scope, receive, send)
+            return
+        host: str | None = None
+        for name, value in scope.get("headers", []):
+            if name == b"host":
+                host = value.decode()
+                break
+        if host is not None and self._ok(host):
+            await self.app(scope, receive, send)
+            return
+        await _send_error(send, 421, "Host not allowed.")
