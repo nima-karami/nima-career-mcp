@@ -8,16 +8,9 @@ primary_region = "yyz"          # Toronto; change as desired
 
 [env]
   NIMA_CORPUS_DIR = "/app/corpus"
-  # Comma-separated origin allowlist. Empty = allow any origin (public server).
-  # Set this to your website origin(s) if you want to restrict browser callers.
-  NIMA_ALLOWED_ORIGINS = ""
-  # Comma-separated Host allowlist (DNS-rebinding defense). Locked to the Fly hostname so
-  # the server only answers to its own name. Add any custom domain you attach here, e.g.
-  # "nima-career-mcp.fly.dev,mcp.yourdomain.com". A trailing ":*" allows any port. Set to
-  # "" only if you deliberately want it to answer on any Host (less safe).
-  NIMA_ALLOWED_HOSTS = "nima-career-mcp.fly.dev"
-  # Per-IP requests per minute (rate limit). Tune for expected traffic.
-  NIMA_RATE_LIMIT_PER_MIN = "60"
+  NIMA_ALLOWED_ORIGINS = ""                          # empty = any origin (public)
+  NIMA_ALLOWED_HOSTS = "nima-career-mcp.fly.dev"     # add custom domains here, comma-separated
+  NIMA_RATE_LIMIT_PER_MIN = "60"                     # per-IP
 
 [http_service]
   internal_port = 8080
@@ -26,16 +19,13 @@ primary_region = "yyz"          # Toronto; change as desired
   auto_start_machines = true
   min_machines_running = 0      # stateless: scale to zero when idle
 
-  # Finite concurrency ceiling per machine. Fly's default leaves hard_limit unbounded, so a
-  # connection flood could pile onto one small VM and OOM it before the app's per-IP rate
-  # limiter can shed load. Cap it so excess load is queued/spread instead.
+  # Finite ceiling so a connection flood can't pile onto one small VM (Fly's default is unbounded).
   [http_service.concurrency]
     type = "requests"
     hard_limit = 50
     soft_limit = 25
 
-# The MCP endpoint is served at /mcp on this app's https URL,
-# e.g. https://<app>.fly.dev/mcp
+# MCP endpoint: https://<app>.fly.dev/mcp
 [[vm]]
   size = "shared-cpu-1x"
   memory = "256mb"

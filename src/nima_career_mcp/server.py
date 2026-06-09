@@ -43,13 +43,8 @@ def build_server() -> tuple[FastMCP, CareerService]:
     corpus = load_corpus()
     service = CareerService(corpus)
 
-    # Stateless HTTP: no sessions needed for a read-only corpus; scales horizontally.
-    #
-    # FastMCP auto-enables localhost-only Host validation (DNS-rebinding defense) whenever it
-    # thinks it's bound to localhost — which 421s every request once deployed behind a real
-    # hostname (e.g. *.fly.dev). This is an intentionally PUBLIC server, so we turn that
-    # built-in off and own the host/origin policy ourselves in build_http_app's middleware
-    # (env-driven, "empty allowlist = public"). See security.py.
+    # Disable the SDK's DNS-rebinding guard: it locks to localhost and 421s any real hostname.
+    # build_http_app's middleware owns host/origin policy for this public server instead.
     mcp = FastMCP(
         "Nima Career",
         instructions=INSTRUCTIONS,

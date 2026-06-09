@@ -1,14 +1,6 @@
-"""ASGI middleware enforcing the public server's safety posture.
-
-These are the server-side measures the MCP spec calls for on a public HTTP server:
-  * per-IP rate limiting (Tools security: "rate limit tool invocations"),
-  * request body-size caps (input validation / DoS resistance),
-  * Origin + Host validation (Streamable HTTP transport: DNS-rebinding defense).
-
-They are written as raw ASGI middleware (not BaseHTTPMiddleware) so they never buffer or
-break streaming responses. Behavioral guardrails (honesty / prompt-injection refusal) live
-in the *consuming host's* system prompt, served from the `career://guidance` resource — not
-here. This layer only decides whether to let a request reach the MCP app.
+"""Raw ASGI middleware enforcing the public server's safety posture: rate limiting,
+body-size caps, and Origin/Host validation. Behavioral guardrails (honesty,
+prompt-injection refusal) live in the host's system prompt via `career://guidance`.
 """
 
 from __future__ import annotations
@@ -38,10 +30,8 @@ async def _send_error(
 
 
 def _client_ip(scope: Scope) -> str:
-    # Behind Fly, the only trustworthy client identifier is `Fly-Client-IP`: Fly sets it and
-    # clients cannot forge it. We deliberately do NOT trust `X-Forwarded-For` for rate-limit
-    # keying — a client can prepend arbitrary values to it, which would both bypass the limit
-    # and let an attacker mint unlimited distinct keys. Fall back to the socket peer locally.
+    # Fly-Client-IP is unforgeable; X-Forwarded-For is client-controllable and must not key
+    # the rate limiter (spoofing it bypasses the limit and mints unbounded buckets).
     for name, value in scope.get("headers", []):
         if name == b"fly-client-ip":
             return value.decode().strip()
@@ -50,11 +40,8 @@ def _client_ip(scope: Scope) -> str:
 
 
 class RateLimitMiddleware:
-    """Fixed-window per-IP rate limit.
-
-    Keyed off the trusted client IP (see `_client_ip`). Idle buckets are swept so a flood of
-    distinct keys cannot grow the in-memory map without bound (memory-exhaustion DoS).
-    """
+    """Fixed-window per-IP rate limit. Idle buckets are swept so a flood of distinct keys
+    can't grow the in-memory map without bound."""
 
     def __init__(
         self,
@@ -70,8 +57,6 @@ class RateLimitMiddleware:
         self._last_sweep = 0.0
 
     def _sweep(self, now: float) -> None:
-        # Drop buckets whose newest hit has aged out of the window, so idle/forged keys don't
-        # accumulate. Bounded work: at most one pass over the current key set.
         stale = [
             ip for ip, q in self._hits.items() if not q or now - q[-1] > self.window
         ]
@@ -84,7 +69,6 @@ class RateLimitMiddleware:
             return
 
         now = time.monotonic()
-        # Sweep once per window, or immediately if the map has grown implausibly large.
         if now - self._last_sweep > self.window or len(self._hits) > self.max_tracked_ips:
             self._sweep(now)
             self._last_sweep = now
@@ -106,12 +90,8 @@ class RateLimitMiddleware:
 
 
 class BodySizeLimitMiddleware:
-    """Reject requests whose body exceeds `max_bytes`.
-
-    Enforced on the actual request stream, not just the declared `Content-Length` — a chunked
-    or length-omitted body would otherwise bypass the cap. The body is buffered up to the cap
-    (small, 256 KiB) and replayed to the app, so oversized requests never reach it.
-    """
+    """Reject requests whose body exceeds `max_bytes`, enforced on the actual stream so a
+    chunked or length-omitted body can't bypass the Content-Length check."""
 
     def __init__(self, app: ASGIApp, max_bytes: int = 256 * 1024) -> None:
         self.app = app
@@ -122,7 +102,6 @@ class BodySizeLimitMiddleware:
             await self.app(scope, receive, send)
             return
 
-        # Fast reject on an honestly-declared oversized Content-Length.
         for name, value in scope.get("headers", []):
             if name == b"content-length":
                 try:
@@ -132,9 +111,8 @@ class BodySizeLimitMiddleware:
                 except ValueError:
                     pass
 
-        # Buffer the real body up to the cap; reject if it overflows (covers chunked bodies
-        # and lying/absent Content-Length). `pending` holds a non-request message (e.g. an
-        # http.disconnect) seen while reading, to forward after the buffered body.
+        # Buffer up to the cap, then replay to the app; `pending` carries any non-request
+        # message (e.g. http.disconnect) read while buffering.
         chunks: list[bytes] = []
         total = 0
         pending: Message | None = None
@@ -171,12 +149,8 @@ class BodySizeLimitMiddleware:
 
 
 class OriginValidationMiddleware:
-    """Validate the Origin header against an allowlist (DNS-rebinding defense).
-
-    If `allowed_origins` is empty, all origins are allowed (intentionally public server),
-    but non-browser clients (no Origin header) always pass. Set NIMA_ALLOWED_ORIGINS to
-    restrict browser callers to your website origin(s).
-    """
+    """Validate the Origin header against an allowlist. Empty allowlist = allow any (public);
+    requests with no Origin (non-browser clients) always pass."""
 
     def __init__(self, app: ASGIApp, allowed_origins: list[str] | None = None) -> None:
         self.app = app
@@ -191,7 +165,6 @@ class OriginValidationMiddleware:
             if name == b"origin":
                 origin = value.decode()
                 break
-        # No Origin header => non-browser agent (Claude Code, backend client) => allow.
         if origin is None or origin in self.allowed:
             await self.app(scope, receive, send)
             return
@@ -199,15 +172,8 @@ class OriginValidationMiddleware:
 
 
 class HostValidationMiddleware:
-    """Validate the Host header against an allowlist (DNS-rebinding defense).
-
-    The MCP SDK ships its own Host check but only auto-enables it for localhost binds, where
-    it then 421s any real deployed hostname. We disable the SDK's copy (see server.py) and
-    own the policy here so it follows the same "empty allowlist = public" semantics as the
-    rest of this layer: with NIMA_ALLOWED_HOSTS unset, any Host passes (intentionally public
-    server). Set NIMA_ALLOWED_HOSTS to your deploy hostname(s) to lock it down — e.g.
-    `nima-career-mcp.fly.dev`. A trailing `:*` allows any port (e.g. `localhost:*`).
-    """
+    """Validate the Host header against an allowlist (DNS-rebinding defense). Empty allowlist
+    = allow any (public). A trailing `:*` in an entry allows any port."""
 
     def __init__(self, app: ASGIApp, allowed_hosts: list[str] | None = None) -> None:
         self.app = app
@@ -216,7 +182,6 @@ class HostValidationMiddleware:
     def _ok(self, host: str) -> bool:
         if host in self.allowed:
             return True
-        # Wildcard-port patterns: "example.com:*" matches "example.com:8080".
         for pattern in self.allowed:
             if pattern.endswith(":*") and host.startswith(pattern[:-1]):
                 return True

@@ -18,9 +18,7 @@ from .corpus import Corpus
 
 Kind = str  # one of: "role", "project", "bullet", "skill"
 
-# Hard ceiling on how many hits any single search can return, regardless of the caller's
-# `limit`. Keeps one request from dumping an arbitrarily large corpus and rejects nonsense
-# (negative) limits that would otherwise slice the list incorrectly.
+# Ceiling on hits per search, regardless of caller `limit` (also rejects negative limits).
 MAX_RESULTS = 50
 
 
