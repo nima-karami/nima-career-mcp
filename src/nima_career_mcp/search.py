@@ -18,6 +18,11 @@ from .corpus import Corpus
 
 Kind = str  # one of: "role", "project", "bullet", "skill"
 
+# Hard ceiling on how many hits any single search can return, regardless of the caller's
+# `limit`. Keeps one request from dumping an arbitrarily large corpus and rejects nonsense
+# (negative) limits that would otherwise slice the list incorrectly.
+MAX_RESULTS = 50
+
 
 @dataclass
 class SearchHit:
@@ -60,6 +65,7 @@ def search(
     ranking. Results are sorted by descending score and truncated to `limit`.
     """
     kinds = kinds or ["role", "project", "bullet", "skill"]
+    limit = max(1, min(limit, MAX_RESULTS))
     hits: list[SearchHit] = []
 
     if "role" in kinds:

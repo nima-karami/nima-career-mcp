@@ -3,7 +3,7 @@
 These are the server-side measures the MCP spec calls for on a public HTTP server:
   * per-IP rate limiting (Tools security: "rate limit tool invocations"),
   * request body-size caps (input validation / DoS resistance),
-  * Origin validation (Streamable HTTP transport: DNS-rebinding defense).
+  * Origin + Host validation (Streamable HTTP transport: DNS-rebinding defense).
 
 They are written as raw ASGI middleware (not BaseHTTPMiddleware) so they never buffer or
 break streaming responses. Behavioral guardrails (honesty / prompt-injection refusal) live
@@ -17,61 +17,101 @@ import json
 import time
 from collections import defaultdict, deque
 
-from starlette.types import ASGIApp, Receive, Scope, Send
+from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 
-async def _send_error(send: Send, status: int, detail: str) -> None:
+async def _send_error(
+    send: Send,
+    status: int,
+    detail: str,
+    extra_headers: list[tuple[bytes, bytes]] | None = None,
+) -> None:
     body = json.dumps({"error": detail}).encode("utf-8")
-    await send(
-        {
-            "type": "http.response.start",
-            "status": status,
-            "headers": [
-                (b"content-type", b"application/json"),
-                (b"content-length", str(len(body)).encode()),
-            ],
-        }
-    )
+    headers = [
+        (b"content-type", b"application/json"),
+        (b"content-length", str(len(body)).encode()),
+    ]
+    if extra_headers:
+        headers.extend(extra_headers)
+    await send({"type": "http.response.start", "status": status, "headers": headers})
     await send({"type": "http.response.body", "body": body})
 
 
 def _client_ip(scope: Scope) -> str:
-    # Honor X-Forwarded-For when behind a proxy (Fly), else fall back to the socket peer.
+    # Behind Fly, the only trustworthy client identifier is `Fly-Client-IP`: Fly sets it and
+    # clients cannot forge it. We deliberately do NOT trust `X-Forwarded-For` for rate-limit
+    # keying — a client can prepend arbitrary values to it, which would both bypass the limit
+    # and let an attacker mint unlimited distinct keys. Fall back to the socket peer locally.
     for name, value in scope.get("headers", []):
-        if name == b"x-forwarded-for":
-            return value.decode().split(",")[0].strip()
+        if name == b"fly-client-ip":
+            return value.decode().strip()
     client = scope.get("client")
     return client[0] if client else "unknown"
 
 
 class RateLimitMiddleware:
-    """Fixed-window per-IP rate limit."""
+    """Fixed-window per-IP rate limit.
 
-    def __init__(self, app: ASGIApp, limit_per_min: int = 60) -> None:
+    Keyed off the trusted client IP (see `_client_ip`). Idle buckets are swept so a flood of
+    distinct keys cannot grow the in-memory map without bound (memory-exhaustion DoS).
+    """
+
+    def __init__(
+        self,
+        app: ASGIApp,
+        limit_per_min: int = 60,
+        max_tracked_ips: int = 50_000,
+    ) -> None:
         self.app = app
         self.limit = limit_per_min
         self.window = 60.0
+        self.max_tracked_ips = max_tracked_ips
         self._hits: dict[str, deque[float]] = defaultdict(deque)
+        self._last_sweep = 0.0
+
+    def _sweep(self, now: float) -> None:
+        # Drop buckets whose newest hit has aged out of the window, so idle/forged keys don't
+        # accumulate. Bounded work: at most one pass over the current key set.
+        stale = [
+            ip for ip, q in self._hits.items() if not q or now - q[-1] > self.window
+        ]
+        for ip in stale:
+            del self._hits[ip]
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http" or self.limit <= 0:
             await self.app(scope, receive, send)
             return
 
-        ip = _client_ip(scope)
         now = time.monotonic()
+        # Sweep once per window, or immediately if the map has grown implausibly large.
+        if now - self._last_sweep > self.window or len(self._hits) > self.max_tracked_ips:
+            self._sweep(now)
+            self._last_sweep = now
+
+        ip = _client_ip(scope)
         q = self._hits[ip]
         while q and now - q[0] > self.window:
             q.popleft()
         if len(q) >= self.limit:
-            await _send_error(send, 429, "Rate limit exceeded. Try again shortly.")
+            await _send_error(
+                send,
+                429,
+                "Rate limit exceeded. Try again shortly.",
+                extra_headers=[(b"retry-after", b"60")],
+            )
             return
         q.append(now)
         await self.app(scope, receive, send)
 
 
 class BodySizeLimitMiddleware:
-    """Reject requests whose declared body exceeds `max_bytes`."""
+    """Reject requests whose body exceeds `max_bytes`.
+
+    Enforced on the actual request stream, not just the declared `Content-Length` — a chunked
+    or length-omitted body would otherwise bypass the cap. The body is buffered up to the cap
+    (small, 256 KiB) and replayed to the app, so oversized requests never reach it.
+    """
 
     def __init__(self, app: ASGIApp, max_bytes: int = 256 * 1024) -> None:
         self.app = app
@@ -81,6 +121,8 @@ class BodySizeLimitMiddleware:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
+
+        # Fast reject on an honestly-declared oversized Content-Length.
         for name, value in scope.get("headers", []):
             if name == b"content-length":
                 try:
@@ -89,7 +131,43 @@ class BodySizeLimitMiddleware:
                         return
                 except ValueError:
                     pass
-        await self.app(scope, receive, send)
+
+        # Buffer the real body up to the cap; reject if it overflows (covers chunked bodies
+        # and lying/absent Content-Length). `pending` holds a non-request message (e.g. an
+        # http.disconnect) seen while reading, to forward after the buffered body.
+        chunks: list[bytes] = []
+        total = 0
+        pending: Message | None = None
+        more = True
+        while more:
+            message = await receive()
+            if message["type"] != "http.request":
+                pending = message
+                break
+            total += len(message.get("body", b""))
+            if total > self.max_bytes:
+                await _send_error(send, 413, "Request body too large.")
+                return
+            chunks.append(message.get("body", b""))
+            more = message.get("more_body", False)
+
+        replayed = False
+
+        async def replay_receive() -> Message:
+            nonlocal replayed, pending
+            if not replayed:
+                replayed = True
+                return {
+                    "type": "http.request",
+                    "body": b"".join(chunks),
+                    "more_body": False,
+                }
+            if pending is not None:
+                msg, pending = pending, None
+                return msg
+            return await receive()
+
+        await self.app(scope, replay_receive, send)
 
 
 class OriginValidationMiddleware:

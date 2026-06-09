@@ -1,6 +1,6 @@
-# Fly.io deploy config. Rename `app` and set your domain before `fly deploy`.
-# Follows Fly's remote-MCP blueprint: https://fly.io/docs/blueprints/remote-mcp-servers/
-app = "nima-career-mcp"        # TODO: set to your Fly app name
+# Fly.io deploy config. Follows Fly's remote-MCP blueprint:
+# https://fly.io/docs/blueprints/remote-mcp-servers/
+app = "nima-career-mcp"
 primary_region = "yyz"          # Toronto; change as desired
 
 [build]
@@ -11,11 +11,11 @@ primary_region = "yyz"          # Toronto; change as desired
   # Comma-separated origin allowlist. Empty = allow any origin (public server).
   # Set this to your website origin(s) if you want to restrict browser callers.
   NIMA_ALLOWED_ORIGINS = ""
-  # Comma-separated Host allowlist (DNS-rebinding defense). Empty = allow any Host
-  # (public server). Lock it down by listing your hostname(s), e.g.
-  # "nima-career-mcp.fly.dev". A trailing ":*" allows any port. Leave empty if you
-  # plan to attach custom domains.
-  NIMA_ALLOWED_HOSTS = ""
+  # Comma-separated Host allowlist (DNS-rebinding defense). Locked to the Fly hostname so
+  # the server only answers to its own name. Add any custom domain you attach here, e.g.
+  # "nima-career-mcp.fly.dev,mcp.yourdomain.com". A trailing ":*" allows any port. Set to
+  # "" only if you deliberately want it to answer on any Host (less safe).
+  NIMA_ALLOWED_HOSTS = "nima-career-mcp.fly.dev"
   # Per-IP requests per minute (rate limit). Tune for expected traffic.
   NIMA_RATE_LIMIT_PER_MIN = "60"
 
@@ -25,6 +25,14 @@ primary_region = "yyz"          # Toronto; change as desired
   auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0      # stateless: scale to zero when idle
+
+  # Finite concurrency ceiling per machine. Fly's default leaves hard_limit unbounded, so a
+  # connection flood could pile onto one small VM and OOM it before the app's per-IP rate
+  # limiter can shed load. Cap it so excess load is queued/spread instead.
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 50
+    soft_limit = 25
 
 # The MCP endpoint is served at /mcp on this app's https URL,
 # e.g. https://<app>.fly.dev/mcp

@@ -1,8 +1,9 @@
 # Stateless Streamable-HTTP MCP server, served by uvicorn behind Fly's TLS.
 FROM python:3.12-slim
 
-# Install uv (fast, reproducible installs).
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# Install uv (fast, reproducible installs). Pinned, not `:latest`, so the build can't pull a
+# different toolchain out from under the committed uv.lock (supply-chain / reproducibility).
+COPY --from=ghcr.io/astral-sh/uv:0.11.19 /uv /uvx /bin/
 
 WORKDIR /app
 
@@ -20,5 +21,10 @@ ENV HOST=0.0.0.0
 ENV PORT=8080
 EXPOSE 8080
 
-# server:app is the middleware-wrapped ASGI app (rate limit + Origin + size caps).
+# Drop root: the server only ever reads /app, so run as an unprivileged user (defense in
+# depth — a process bug can't write the image or escalate within the container).
+RUN useradd --create-home --uid 10001 appuser
+USER appuser
+
+# server:app is the middleware-wrapped ASGI app (rate limit + Origin + Host + size caps).
 CMD ["uvicorn", "nima_career_mcp.server:app", "--host", "0.0.0.0", "--port", "8080"]

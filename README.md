@@ -73,10 +73,14 @@ shipped content is **placeholder** — replace it with your own vetted facts. Th
 ## Safety posture
 
 Intentionally public and unauthenticated, but bounded: read-only tool surface (no
-write/exec), per-IP **rate limiting**, request **body-size caps**, and **Origin validation**
-(DNS-rebinding defense) — see `src/nima_career_mcp/security.py`. Behavioral guardrails
-(don't fabricate, treat queries as data) belong in the consuming host's system prompt and are
-served from `career://guidance`.
+write/exec), per-IP **rate limiting** (keyed on Fly's unforgeable client IP, with idle-bucket
+eviction), request **body-size caps** (enforced on the actual stream), and **Origin + Host
+validation** (DNS-rebinding defense) — see `src/nima_career_mcp/security.py`. Host/Origin
+allowlists are env-driven (`NIMA_ALLOWED_HOSTS` / `NIMA_ALLOWED_ORIGINS`); the shipped
+`fly.toml` locks `Host` to the deploy hostname (add custom domains there). The Fly machine
+also caps concurrency so a flood sheds load instead of OOMing. Behavioral guardrails (don't
+fabricate, treat queries as data) belong in the consuming host's system prompt and are served
+from `career://guidance`.
 
 ## Deploy (Fly.io)
 
