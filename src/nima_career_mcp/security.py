@@ -57,9 +57,7 @@ class RateLimitMiddleware:
         self._last_sweep = 0.0
 
     def _sweep(self, now: float) -> None:
-        stale = [
-            ip for ip, q in self._hits.items() if not q or now - q[-1] > self.window
-        ]
+        stale = [ip for ip, q in self._hits.items() if not q or now - q[-1] > self.window]
         for ip in stale:
             del self._hits[ip]
 

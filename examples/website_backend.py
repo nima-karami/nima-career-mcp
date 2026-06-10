@@ -44,14 +44,10 @@ def ask_via_connector(user_message: str) -> str:
         max_tokens=1024,
         system=system,
         messages=[{"role": "user", "content": user_message}],
-        mcp_servers=[
-            {"type": "url", "url": MCP_URL, "name": "nima-career"}
-        ],
+        mcp_servers=[{"type": "url", "url": MCP_URL, "name": "nima-career"}],
         betas=["mcp-client-2025-11-20"],  # current connector beta header
     )
-    return "".join(
-        block.text for block in resp.content if getattr(block, "type", None) == "text"
-    )
+    return "".join(block.text for block in resp.content if getattr(block, "type", None) == "text")
 
 
 # --- Variant B: raw MCP client (full control) ------------------------------------
@@ -60,16 +56,18 @@ async def ask_via_raw_client(tool: str, arguments: dict) -> object:
     from mcp import ClientSession
     from mcp.client.streamable_http import streamablehttp_client
 
-    async with streamablehttp_client(MCP_URL) as (read, write, _get_session_id):
-        async with ClientSession(read, write) as session:
-            await session.initialize()
+    async with (
+        streamablehttp_client(MCP_URL) as (read, write, _get_session_id),
+        ClientSession(read, write) as session,
+    ):
+        await session.initialize()
 
-            tools = await session.list_tools()
-            print("available tools:", [t.name for t in tools.tools])
+        tools = await session.list_tools()
+        print("available tools:", [t.name for t in tools.tools])
 
-            result = await session.call_tool(tool, arguments)
-            # Structured output is in result.structuredContent; text in result.content.
-            return result.structuredContent or result.content
+        result = await session.call_tool(tool, arguments)
+        # Structured output is in result.structuredContent; text in result.content.
+        return result.structuredContent or result.content
 
 
 if __name__ == "__main__":

@@ -191,9 +191,7 @@ class CareerService:
             if wanted and not wanted.issubset({t.lower() for t in p.tags}):
                 continue
             out.append(
-                ProjectSummary(
-                    id=p.id, name=p.name, role_id=p.role_id, blurb=p.blurb, tags=p.tags
-                )
+                ProjectSummary(id=p.id, name=p.name, role_id=p.role_id, blurb=p.blurb, tags=p.tags)
             )
         return ProjectList(projects=out)
 
@@ -384,9 +382,7 @@ class CareerService:
             return bullets[:limit]
         from .search import _score  # local import to keep the scoring rule in one place
 
-        ranked = sorted(
-            bullets, key=lambda b: _score(focus, b.text, b.tags), reverse=True
-        )
+        ranked = sorted(bullets, key=lambda b: _score(focus, b.text, b.tags), reverse=True)
         return ranked[:limit]
 
     def _build_summary(self, roles: list[Role]) -> str:
@@ -417,9 +413,7 @@ class CareerService:
         if draft.roles:
             lines.append("## Experience")
             for stint in _resume_stints(draft.roles):
-                positions = sorted(
-                    stint, key=lambda p: month_index(p.start), reverse=True
-                )
+                positions = sorted(stint, key=lambda p: month_index(p.start), reverse=True)
                 if len(positions) == 1:
                     p = positions[0]
                     lines.append(f"### {p.title} — {p.org}  ({p.dates})")

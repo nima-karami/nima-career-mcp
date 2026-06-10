@@ -22,11 +22,14 @@ Two non-negotiable invariants shape the design:
 ```bash
 uv sync --all-extras --dev                  # install (uv is the package manager)
 
+uv run python scripts/verify.py             # the gate: format+lint+types+SAST+tests (== CI)
+
 uv run pytest -q                            # all tests (includes corpus integrity)
 uv run pytest tests/test_security.py -q     # one file
 uv run pytest tests/test_tools.py::test_list_roles_includes_seed   # one test
-uv run ruff check .                         # lint
+uv run ruff check .                         # lint    (ruff format . to autofix style)
 uv run pyright                              # types (checks src + tests)
+uv run bandit -c pyproject.toml -r src/     # SAST
 
 uv run nima-career-mcp                                  # stdio (local/desktop clients)
 uv run nima-career-mcp --transport streamable-http      # HTTP at 127.0.0.1:8080/mcp
@@ -35,7 +38,8 @@ uv run python scripts/dump_corpus.py                    # dump raw + grouped + s
 
 Inspector: `npx -y @modelcontextprotocol/inspector uv run nima-career-mcp` (or
 `uv run mcp dev dev_server.py` — see `dev_server.py` for why the shim exists). Deploy:
-`fly deploy`. CI runs ruff + pyright + pytest on push/PR.
+`fly deploy`. CI runs `scripts/verify.py` (format+lint+types+SAST+tests) plus a Semgrep job
+on push/PR. A pinned `pre-commit` hook (ruff check+format) is available: `pre-commit install`.
 
 ## Architecture
 

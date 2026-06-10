@@ -50,9 +50,7 @@ def build_server() -> tuple[FastMCP, CareerService]:
         instructions=INSTRUCTIONS,
         stateless_http=True,
         json_response=True,
-        transport_security=TransportSecuritySettings(
-            enable_dns_rebinding_protection=False
-        ),
+        transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
     )
     register_all(mcp, service)
     register_resources(mcp, service)
@@ -63,12 +61,8 @@ def build_server() -> tuple[FastMCP, CareerService]:
 
 def build_http_app(mcp: FastMCP) -> ASGIApp:
     """Wrap the Streamable-HTTP ASGI app with the public-server safety middleware."""
-    allowed = [
-        o for o in os.environ.get("NIMA_ALLOWED_ORIGINS", "").split(",") if o.strip()
-    ]
-    hosts = [
-        h for h in os.environ.get("NIMA_ALLOWED_HOSTS", "").split(",") if h.strip()
-    ]
+    allowed = [o for o in os.environ.get("NIMA_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+    hosts = [h for h in os.environ.get("NIMA_ALLOWED_HOSTS", "").split(",") if h.strip()]
     rate = int(os.environ.get("NIMA_RATE_LIMIT_PER_MIN", "60"))
 
     inner: ASGIApp = mcp.streamable_http_app()  # serves the MCP endpoint at /mcp

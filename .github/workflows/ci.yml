@@ -26,11 +26,16 @@ jobs:
       - name: Sync dependencies
         run: uv sync --all-extras --dev
 
-      - name: Lint
-        run: uv run ruff check .
+      - name: Verify (format, lint, types, SAST, tests)
+        run: uv run python scripts/verify.py
 
-      - name: Type check
-        run: uv run pyright
-
-      - name: Test (includes corpus integrity)
-        run: uv run pytest -q
+  # Deeper taint analysis; Linux-only (Semgrep has no native Windows), so it lives
+  # in CI rather than the local verify harness.
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v6
+      - name: Semgrep scan
+        run: semgrep scan --config=p/python --error

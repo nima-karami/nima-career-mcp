@@ -79,9 +79,7 @@ class Recorder:
 
 
 async def test_client_ip_prefers_fly_header() -> None:
-    scope = _scope(
-        headers=[(b"fly-client-ip", b"9.9.9.9"), (b"x-forwarded-for", b"1.1.1.1")]
-    )
+    scope = _scope(headers=[(b"fly-client-ip", b"9.9.9.9"), (b"x-forwarded-for", b"1.1.1.1")])
     assert _client_ip(scope) == "9.9.9.9"
 
 

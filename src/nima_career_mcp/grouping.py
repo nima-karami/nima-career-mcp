@@ -10,7 +10,8 @@ stays flat so a client can group, split, or not group at all.
 
 from __future__ import annotations
 
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from pydantic import BaseModel
 
@@ -50,7 +51,7 @@ def split_into_stints(
         return []
     ordered = sorted(items, key=lambda x: month_index(get_start(x)))
     stints: list[list[T]] = [[ordered[0]]]
-    for prev, nxt in zip(ordered, ordered[1:]):
+    for prev, nxt in zip(ordered, ordered[1:], strict=False):
         prev_end = get_end(prev)
         if prev_end is None or month_index(get_start(nxt)) - month_index(prev_end) <= 1:
             stints[-1].append(nxt)

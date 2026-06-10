@@ -32,12 +32,29 @@ dev = [
     "anyio>=4",
     "ruff>=0.7",
     "pyright>=1.1",
+    "bandit>=1.8",
 ]
 
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "C901", "S", "UP", "SIM"]
+
+[tool.ruff.lint.mccabe]
+# Baselined to clear current honesty-critical branchy functions (validator, resume
+# assembler, markdown renderer, search, body-size middleware); still gates runaway growth.
+max-complexity = 15
+
+[tool.ruff.lint.per-file-ignores]
+# Tests use assert (S101) and may hardcode throwaway values (S105/S106).
+"tests/**" = ["S101", "S105", "S106"]
+
 [tool.pyright]
 include = ["src", "tests"]
 pythonVersion = "3.10"
+
+[tool.bandit]
+# Scan shipped source only; tests intentionally use asserts and fixture values.
+exclude_dirs = ["tests"]

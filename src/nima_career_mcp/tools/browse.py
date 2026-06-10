@@ -49,9 +49,7 @@ def register_browse(mcp: FastMCP, service: CareerService) -> None:
         return service.get_role(role_id)
 
     @mcp.tool()
-    def list_projects(
-        tags: list[str] | None = None, role_id: str | None = None
-    ) -> ProjectList:
+    def list_projects(tags: list[str] | None = None, role_id: str | None = None) -> ProjectList:
         """List projects, optionally filtered by tags (AND) and/or owning role_id."""
         return service.list_projects(tags=tags, role_id=role_id)
 

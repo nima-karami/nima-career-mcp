@@ -20,6 +20,4 @@ def register_bullets(mcp: FastMCP, service: CareerService) -> None:
         Each bullet is pre-approved and cites the evidence ids it derives from. Filter by
         role_id, project_id, and/or tags (AND). With no filters, returns all bullets.
         """
-        return service.list_bullets(
-            role_id=role_id, project_id=project_id, tags=tags, limit=limit
-        )
+        return service.list_bullets(role_id=role_id, project_id=project_id, tags=tags, limit=limit)

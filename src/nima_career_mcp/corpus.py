@@ -164,26 +164,20 @@ class Corpus(BaseModel):
         for b in self.all_bullets():
             for sid in b.source_ids:
                 if sid not in evidence_ids:
-                    problems.append(
-                        f"bullet '{b.id}' cites missing evidence id '{sid}'"
-                    )
+                    problems.append(f"bullet '{b.id}' cites missing evidence id '{sid}'")
 
         # Every skill's evidence_ids must resolve.
         for cat in self.skills:
             for s in cat.skills:
                 for sid in s.evidence_ids:
                     if sid not in evidence_ids:
-                        problems.append(
-                            f"skill '{s.name}' cites missing evidence id '{sid}'"
-                        )
+                        problems.append(f"skill '{s.name}' cites missing evidence id '{sid}'")
 
         # Projects that name a role must point at a real role.
         role_ids = {r.id for r in self.roles}
         for p in self.projects:
             if p.role_id and p.role_id not in role_ids:
-                problems.append(
-                    f"project '{p.id}' references missing role_id '{p.role_id}'"
-                )
+                problems.append(f"project '{p.id}' references missing role_id '{p.role_id}'")
 
         # Roles sharing a company_id must agree on the display org name.
         org_by_company: dict[str, str] = {}
@@ -198,9 +192,7 @@ class Corpus(BaseModel):
                 )
 
         if problems:
-            raise CorpusError(
-                "Corpus integrity check failed:\n  - " + "\n  - ".join(problems)
-            )
+            raise CorpusError("Corpus integrity check failed:\n  - " + "\n  - ".join(problems))
 
     def _evidence_id_list(self) -> list[str]:
         out: list[str] = []
@@ -260,8 +252,7 @@ def load_corpus(corpus_dir: Path | None = None) -> Corpus:
         profile = Profile.model_validate(_read_yaml(profile_path))
 
         roles = [
-            Role.model_validate(_read_yaml(p))
-            for p in sorted((root / "roles").glob("*.yaml"))
+            Role.model_validate(_read_yaml(p)) for p in sorted((root / "roles").glob("*.yaml"))
         ]
         projects = [
             Project.model_validate(_read_yaml(p))

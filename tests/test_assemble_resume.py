@@ -18,9 +18,7 @@ def _all_corpus_ids(corpus: Corpus) -> set[str]:
     return ids
 
 
-def test_every_emitted_bullet_exists_in_corpus(
-    service: CareerService, corpus: Corpus
-) -> None:
+def test_every_emitted_bullet_exists_in_corpus(service: CareerService, corpus: Corpus) -> None:
     draft = service.assemble_resume(focus="0-to-1 product")
     allowed = _corpus_bullet_texts(corpus)
     for role in draft.roles:
@@ -28,18 +26,14 @@ def test_every_emitted_bullet_exists_in_corpus(
             assert text in allowed, f"fabricated bullet: {text!r}"
 
 
-def test_every_emitted_org_exists_in_corpus(
-    service: CareerService, corpus: Corpus
-) -> None:
+def test_every_emitted_org_exists_in_corpus(service: CareerService, corpus: Corpus) -> None:
     draft = service.assemble_resume()
     orgs = {r.org for r in corpus.roles}
     for role in draft.roles:
         assert role.org in orgs, f"fabricated employer: {role.org!r}"
 
 
-def test_provenance_is_populated_and_resolves(
-    service: CareerService, corpus: Corpus
-) -> None:
+def test_provenance_is_populated_and_resolves(service: CareerService, corpus: Corpus) -> None:
     draft = service.assemble_resume(focus="realtime")
     assert draft.provenance, "expected provenance ids"
     known = _all_corpus_ids(corpus)
