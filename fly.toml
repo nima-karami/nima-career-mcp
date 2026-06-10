@@ -17,7 +17,7 @@ primary_region = "yyz"          # Toronto; change as desired
   force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
-  min_machines_running = 0      # stateless: scale to zero when idle
+  min_machines_running = 1      # keep one machine always warm (no cold starts); extras autostop
 
   # Finite ceiling so a connection flood can't pile onto one small VM (Fly's default is unbounded).
   [http_service.concurrency]
