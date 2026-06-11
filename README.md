@@ -36,10 +36,10 @@ uv run pytest -q
 
 ## Connecting clients
 
-**Claude Code / Cursor / Claude Desktop (remote, after deploy):**
+**Claude Code / Cursor / Claude Desktop (remote — live):**
 
 ```bash
-claude mcp add --transport http nima https://your-app.fly.dev/mcp
+claude mcp add --transport http nima https://nima-career-mcp.fly.dev/mcp
 ```
 
 **Local stdio (any client that spawns a process):** run `nima-career-mcp` (no `--transport`).
@@ -92,11 +92,12 @@ fly deploy
 ```
 
 The container runs `uvicorn nima_career_mcp.server:app` (the middleware-wrapped Streamable-
-HTTP app). Stateless mode means it scales to zero and back. After deploy, smoke-test with the
-[MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector):
+HTTP app). The shipped `fly.toml` keeps one machine always warm (`min_machines_running = 1`,
+no cold starts) while extra machines autostart/autostop under load. After deploy, smoke-test
+with the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector):
 
 ```bash
-npx @modelcontextprotocol/inspector   # then connect to https://your-app.fly.dev/mcp
+npx @modelcontextprotocol/inspector   # then connect to https://nima-career-mcp.fly.dev/mcp
 ```
 
 ## License
