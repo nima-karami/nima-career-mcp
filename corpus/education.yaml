@@ -1,0 +1,18 @@
+# Education, newest first. Fact content, returned verbatim by get_about.
+- id: march-waterloo
+  institution: University of Waterloo
+  degree: Master of Architecture
+  field: Architecture
+  location: Waterloo, Ontario, Canada
+
+- id: bae-isfahan
+  institution: Art University of Isfahan
+  degree: Bachelor of Architectural Engineering
+  field: Architectural Engineering
+  location: Isfahan, Iran
+
+- id: nodet-ejei
+  institution: Shahid Ejei High School (NODET)
+  degree: High School Diploma
+  location: Isfahan, Iran
+  note: "A NODET school — Iran's national program for gifted students."
