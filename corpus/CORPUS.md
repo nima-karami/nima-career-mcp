@@ -58,9 +58,46 @@ Each title keeps its own `evidence`/`bullets` (what you did *as* that title). Gr
 
 Roles sharing a `company_id` must use the **same `org`** display name (integrity-checked).
 
+## "About" facets — voice & fact content
+
+Four optional top-level files describe the person rather than a job. The `get_about` tool
+returns all four together. Unlike evidence/bullets, these are **not** quantified claims that
+cite a source — they are approved by *authorship* (your own words and plain facts) and are
+returned **verbatim**. Each item carries a free-text `note`/`body`: that depth is what lets a
+host answer with substance instead of a bare list, since the honesty rule forbids it from
+inventing backstory. Missing file = that facet is simply empty.
+
+```yaml
+# corpus/languages.yaml
+- name: Persian (Farsi)
+  proficiency: native        # native | fluent | professional | conversational | basic
+  note: "My mother tongue — I grew up speaking it at home."
+
+# corpus/interests.yaml
+- name: Beach volleyball
+  note: "My way to switch the analytical brain off — all flow and reading the other side."
+
+# corpus/education.yaml
+- id: march                  # unique id (integrity-checked)
+  institution: <school>
+  degree: Master of Architecture
+  field: Architecture        # optional
+  location: <city>           # optional
+  start: "2015-09"           # optional, "YYYY-MM"
+  end: "2018-06"             # optional
+  note: "<thesis focus, honor, etc.>"   # optional
+
+# corpus/principles.yaml
+- id: clarity-from-mess      # unique id (integrity-checked)
+  title: Hold the mess until one line appears
+  body: >-
+    Trained as an architect, I sit with a messy, multi-dimensional problem until a single
+    clear line resolves it, rather than forcing structure too early.
+```
+
 ## Integrity rules (enforced by tests / CI)
 
-- Every id (`role`, `project`, `evidence`, `bullet`) is **unique**.
+- Every id (`role`, `project`, `evidence`, `bullet`, `education`, `principle`) is **unique**.
 - Every `bullet.source_ids` and `skill.evidence_ids` **resolves** to a real evidence id.
 - Every `project.role_id` (if set) **resolves** to a real role.
 

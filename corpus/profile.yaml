@@ -8,10 +8,18 @@ links:
   linkedin: https://www.linkedin.com/in/nima-karami
 bio: >-
   Design engineer / product engineer who builds 0-to-1 products end to end, from
-  interaction design through shipped, production software. Trained as an architect
-  (Master of Architecture), I moved into software and kept the architect's habit of
-  holding a messy, multi-dimensional problem until a single clear line appears. I work
-  across the full stack with a bias toward design taste, product judgment, and an
+  interaction design through shipped, production software.
+
+
+  I came to software the long way around. I drew constantly as a kid, which pulled me into
+  architecture — I hold a Master of Architecture — but I left the field because it was
+  low-leverage and slow-moving: in Toronto the work was mostly designing shoe-box condo
+  layouts, long hours for low pay. I moved into software for the leverage: ship fast,
+  iterate, and actually move the needle. What carried over is the architect's habit of
+  holding a messy, multi-dimensional problem until a single clear line appears.
+
+
+  I work across the full stack with a bias toward design taste, product judgment, and an
   AI-native workflow.
 
 # Only {headline}, {top_tags}, and {name} are substituted, all from corpus values.

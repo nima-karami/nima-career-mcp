@@ -1,0 +1,11 @@
+# Spoken languages. Voice/fact content, returned verbatim by get_about.
+- name: Persian (Farsi)
+  proficiency: native
+  note: "My mother tongue — I was born in Iran and grew up speaking it."
+- name: English
+  proficiency: fluent
+  note: >-
+    I started learning English at five or six and was always the strongest English speaker
+    among my peers back in Iran. I moved to Canada at 24, and English is now my primary
+    working and writing language — many people here assume I was born in Canada or moved as
+    a young child.

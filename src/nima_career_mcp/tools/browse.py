@@ -7,6 +7,7 @@ from mcp.server.fastmcp import FastMCP
 from ..corpus import Profile, Project, Role
 from ..grouping import ExperienceList
 from ..service import (
+    AboutResponse,
     CareerService,
     ProjectList,
     RoleList,
@@ -20,6 +21,16 @@ def register_browse(mcp: FastMCP, service: CareerService) -> None:
     def get_profile() -> Profile:
         """Return Nima Karami's public-safe profile: name, headline, location, links, bio."""
         return service.get_profile()
+
+    @mcp.tool()
+    def get_about() -> AboutResponse:
+        """Get the deeper-person facets: languages, interests, education, and principles.
+
+        Each item carries a free-text note/body in Nima's own words — use it for depth when
+        a conversation goes beyond the resume ("what's he into?", "how does he work?", "where
+        did he study?"). Content is returned verbatim; do not add to it.
+        """
+        return service.get_about()
 
     @mcp.tool()
     def list_roles() -> RoleList:

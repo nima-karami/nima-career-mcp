@@ -55,6 +55,7 @@ async def test_protocol_exposes_tools() -> None:
     names = {t.name for t in tools}
     assert {
         "get_profile",
+        "get_about",
         "list_roles",
         "list_experience",
         "get_role",

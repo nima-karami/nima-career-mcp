@@ -100,6 +100,42 @@ class SkillCategory(BaseModel):
     skills: list[Skill] = Field(default_factory=list)
 
 
+# --- "about" facets: voice/fact content, returned verbatim (no evidence provenance) --------
+#
+# Unlike evidence/bullets (quantified claims that must cite a source), these are approved by
+# authorship: Nima's own words and plain facts. `note`/`body` carry the depth that lets a host
+# answer with substance instead of bare labels — and, per the honesty rule, depth in an answer
+# can only come from depth here, since a host may not invent backstory.
+
+
+class Language(BaseModel):
+    name: str
+    proficiency: str | None = None  # native | fluent | professional | conversational | basic
+    note: str = ""
+
+
+class Interest(BaseModel):
+    name: str
+    note: str = ""
+
+
+class Education(BaseModel):
+    id: str
+    institution: str
+    degree: str
+    field: str | None = None
+    location: str | None = None
+    start: str | None = None  # "YYYY-MM"
+    end: str | None = None  # "YYYY-MM" or null
+    note: str = ""
+
+
+class Principle(BaseModel):
+    id: str
+    title: str
+    body: str = ""
+
+
 class Profile(BaseModel):
     name: str
     headline: str = ""
@@ -117,6 +153,10 @@ class Corpus(BaseModel):
     roles: list[Role] = Field(default_factory=list)
     projects: list[Project] = Field(default_factory=list)
     skills: list[SkillCategory] = Field(default_factory=list)
+    languages: list[Language] = Field(default_factory=list)
+    interests: list[Interest] = Field(default_factory=list)
+    education: list[Education] = Field(default_factory=list)
+    principles: list[Principle] = Field(default_factory=list)
 
     # --- lookups -----------------------------------------------------------------
 
@@ -159,6 +199,8 @@ class Corpus(BaseModel):
         bullet_ids = [b.id for b in self.all_bullets()]
         self._check_unique(bullet_ids, "bullet", problems)
         self._check_unique(list(self._evidence_id_list()), "evidence", problems)
+        self._check_unique([e.id for e in self.education], "education", problems)
+        self._check_unique([p.id for p in self.principles], "principle", problems)
 
         # Every bullet's source_ids must resolve to real evidence.
         for b in self.all_bullets():
@@ -231,6 +273,13 @@ def _read_yaml(path: Path) -> Any:
         return yaml.safe_load(fh)
 
 
+def _read_list(path: Path) -> list[Any]:
+    """Read an optional list-shaped YAML file; missing or empty file -> []."""
+    if not path.exists():
+        return []
+    return _read_yaml(path) or []
+
+
 def load_corpus(corpus_dir: Path | None = None) -> Corpus:
     """Load, validate, and integrity-check the corpus from disk.
 
@@ -262,9 +311,23 @@ def load_corpus(corpus_dir: Path | None = None) -> Corpus:
         skills_path = root / "skills.yaml"
         raw_skills = _read_yaml(skills_path) if skills_path.exists() else []
         skills = [SkillCategory.model_validate(c) for c in (raw_skills or [])]
+
+        languages = [Language.model_validate(x) for x in _read_list(root / "languages.yaml")]
+        interests = [Interest.model_validate(x) for x in _read_list(root / "interests.yaml")]
+        education = [Education.model_validate(x) for x in _read_list(root / "education.yaml")]
+        principles = [Principle.model_validate(x) for x in _read_list(root / "principles.yaml")]
     except ValidationError as exc:
         raise CorpusError(f"Corpus failed schema validation:\n{exc}") from exc
 
-    corpus = Corpus(profile=profile, roles=roles, projects=projects, skills=skills)
+    corpus = Corpus(
+        profile=profile,
+        roles=roles,
+        projects=projects,
+        skills=skills,
+        languages=languages,
+        interests=interests,
+        education=education,
+        principles=principles,
+    )
     corpus.validate_integrity()
     return corpus

@@ -15,7 +15,18 @@ from collections import Counter
 
 from pydantic import BaseModel, Field
 
-from .corpus import Bullet, Corpus, Profile, Project, Role, SkillCategory
+from .corpus import (
+    Bullet,
+    Corpus,
+    Education,
+    Interest,
+    Language,
+    Principle,
+    Profile,
+    Project,
+    Role,
+    SkillCategory,
+)
 from .grouping import (
     ExperienceList,
     fmt_range,
@@ -58,6 +69,15 @@ class ProjectList(BaseModel):
 
 class SkillList(BaseModel):
     categories: list[SkillCategory]
+
+
+class AboutResponse(BaseModel):
+    """The deeper-person facets: languages, interests, education, principles (verbatim)."""
+
+    languages: list[Language]
+    interests: list[Interest]
+    education: list[Education]
+    principles: list[Principle]
 
 
 class BulletList(BaseModel):
@@ -151,6 +171,15 @@ class CareerService:
 
     def get_profile(self) -> Profile:
         return self.corpus.profile
+
+    def get_about(self) -> AboutResponse:
+        """The deeper-person facets, returned verbatim from the corpus."""
+        return AboutResponse(
+            languages=self.corpus.languages,
+            interests=self.corpus.interests,
+            education=self.corpus.education,
+            principles=self.corpus.principles,
+        )
 
     def list_roles(self) -> RoleList:
         return RoleList(
