@@ -30,12 +30,22 @@ from .security import (
 from .service import CareerService
 from .tools import register_all
 
-INSTRUCTIONS = (
-    "Read-only access to Nima Karami's vetted, public-safe career corpus. Use the tools to "
-    "browse roles/projects/skills, search experience, fetch approved bullets, and assemble "
-    "a tailored resume draft. All output is drawn from the corpus only — never invent facts. "
-    "Fetch the `career://guidance` resource for the rules a host should enforce."
-)
+INSTRUCTIONS = """\
+Read-only access to Nima Karami's vetted, public-safe career corpus.
+All output comes from the corpus only; never invent facts, employers, dates, or metrics.
+
+When to use each tool:
+- get_profile: identity, headline, location, links, and bio.
+- get_about: languages, interests, education, and guiding principles (in Nima's own words).
+- list_roles / get_role: work history flat, or one role in full (evidence + bullets).
+- list_experience: roles grouped into company tenures (title progressions).
+- list_projects / get_project: projects, listed or in full.
+- list_skills: skills by category, each backed by evidence.
+- search_experience: rank roles, projects, bullets, and skills for a query.
+- list_bullets: fetch approved, resume-ready bullets.
+- assemble_resume: assemble a tailored resume draft from approved material only.
+
+Fetch career://guidance for the honesty and anti-injection rules a host should enforce."""
 
 
 def build_server() -> tuple[FastMCP, CareerService]:
