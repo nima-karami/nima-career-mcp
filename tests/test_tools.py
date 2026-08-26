@@ -31,6 +31,36 @@ def test_search_finds_relevant_role(service: CareerService) -> None:
     assert any(h.id.startswith("timeplay") for h in results.hits if h.kind == "role")
 
 
+@pytest.mark.parametrize("query", ["TimePlay", "Timeplay", "timeplay"])
+def test_search_by_org_name_ranks_that_orgs_roles_first(service: CareerService, query: str) -> None:
+    """Regression: an org-name query must surface that org's roles, not unrelated skills.
+
+    Before the punctuation fix the role haystack tokenized the org as "timeplay." (trailing
+    sentence period), so a "TimePlay" query shared no token with it, `token_set_ratio` fell
+    back to a whole-string comparison, and every short skill entry outranked the long role
+    summaries. The three TimePlay roles did not appear in the top 10 at all, which let a
+    consuming chat answer that TimePlay was not part of the career record.
+    """
+    hits = service.search_experience(query, limit=10).hits
+    top_three = hits[:3]
+    assert {h.id for h in top_three} == {
+        "timeplay-frontend",
+        "timeplay-fullstack",
+        "timeplay-lead",
+    }
+    assert all(h.kind == "role" for h in top_three)
+
+
+def test_search_by_org_name_survives_a_natural_question(service: CareerService) -> None:
+    """The same must hold when the org name arrives inside a sentence, as a chat sends it."""
+    hits = service.search_experience("What did Nima do at TimePlay?", limit=10).hits
+    assert {h.id for h in hits[:3]} == {
+        "timeplay-frontend",
+        "timeplay-fullstack",
+        "timeplay-lead",
+    }
+
+
 def test_list_bullets_by_role(service: CareerService) -> None:
     bullets = service.list_bullets(role_id="timeplay-fullstack").bullets
     assert len(bullets) == 2
