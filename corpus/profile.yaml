@@ -1,30 +1,34 @@
 # Public-safe profile. NO secrets, NO private contact details beyond the stated policy.
 name: Nima Karami
-headline: Design Engineer / Product Engineer
+# Positioning line, kept in sync with LinkedIn. This is NOT a title of record: the titles
+# of record live on the role files under corpus/roles/.
+headline: Senior Software Engineer · Full-stack product engineer · AI-native · Architect by training
 location: Toronto, Ontario, Canada
 links:
   website: https://www.nima-karami.com
   github: https://github.com/nima-karami
   linkedin: https://www.linkedin.com/in/nima-karami
 bio: >-
-  Design engineer / product engineer who builds 0-to-1 products end to end, from
-  interaction design through shipped, production software.
+  Product engineer who takes things from ambiguous idea to shipped software, across the
+  whole stack. I trained as an architect, which taught me to hold messy, multi-dimensional
+  problems in my head until the through-line appears; I now use that to decompose problems,
+  decide what gets built, and own what happens after it ships.
 
 
-  I came to software the long way around. I drew constantly as a kid, which pulled me into
-  architecture, where I earned a Master of Architecture. I left the field because it was
-  low-leverage and slow-moving: in Toronto the work was mostly designing shoe-box condo
-  layouts, long hours for low pay. I moved into software for the leverage, where I could
-  ship fast, iterate, and actually move the needle. What carried over is the architect's
-  habit of holding a messy, multi-dimensional problem until a single clear line appears.
+  Senior engineer at TimePlay, where I own the web client of a real-money gaming platform
+  and built the backend pieces it needed. On my own time I build AI-native products end to
+  end (React, TypeScript, Node, Python, GCP), and for the last year most of that code is
+  written by coding agents I direct and verify: github.com/nima-karami/conduit is the
+  open-source editor I built for exactly that.
 
 
-  I work across the full stack with a bias toward design taste, product judgment, and an
-  AI-native workflow.
+  Design is where I started and it still shows in the work. Toronto, in person.
 
 # Only {headline}, {top_tags}, and {name} are substituted, all from corpus values.
+# The headline is a standalone positioning line, not a noun phrase, so each template sets
+# it as its own sentence rather than reading through it.
 summary_templates:
-  - "{headline} who builds 0-to-1 products end to end, across {top_tags}."
-  - "Trained as an architect, now a {headline} working across {top_tags} with a bias toward design taste and product judgment."
+  - "{headline}. I take things from ambiguous idea to shipped software, across {top_tags}."
+  - "{headline}. Trained as an architect, now working across {top_tags} with a bias toward design taste and product judgment."
 
 contact_policy: "Reach out through the website or LinkedIn."
