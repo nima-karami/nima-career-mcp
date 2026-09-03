@@ -12,8 +12,8 @@ def test_progression_groups_into_one_tenure(service: CareerService) -> None:
     timeplay = next(c for c in exp.companies if c.company_id == "timeplay")
     # All three TimePlay titles collapse into a single continuous tenure...
     assert len(timeplay.positions) == 3
-    # ...ordered newest-first, and still "Present" because the lead role is open-ended.
-    assert timeplay.positions[0].title == "Lead Full-Stack Developer"
+    # ...ordered newest-first, and still "Present" because the current role is open-ended.
+    assert timeplay.positions[0].title == "Senior Software Engineer"
     assert timeplay.end is None
     assert timeplay.start == "2022-08"
 
@@ -71,5 +71,5 @@ def test_resume_markdown_groups_company_positions(service: CareerService) -> Non
     md = draft.markdown or ""
     # One company header for TimePlay, with each title nested beneath it.
     assert md.count("### TimePlay") == 1
-    for title in ("Lead Full-Stack Developer", "Full-Stack Developer", "Frontend Developer"):
+    for title in ("Senior Software Engineer", "Full-Stack Developer", "Frontend Developer"):
         assert title in md

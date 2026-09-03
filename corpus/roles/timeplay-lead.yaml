@@ -1,12 +1,18 @@
+# The id is a stable internal slug and predates the title change below; it is not a
+# title. TimePlay standardized titles company-wide and the title of record for this,
+# the current role, is Senior Software Engineer. The earlier "Lead Full-Stack
+# Developer" must not appear as a title, because Lead -> Senior reads as a demotion to
+# anyone who cannot see it was a company-wide standardization. The lead-era scope is
+# kept where it belongs: in the summary and in the evidence and bullets below.
 id: timeplay-lead
 company_id: timeplay
 org: TimePlay
-title: Lead Full-Stack Developer
+title: Senior Software Engineer
 start: "2024-08"
 end: null
 location: Toronto, Ontario, Canada
 summary: >-
-  Lead full-stack developer on a real-money cruise-line gaming platform. Originated and
+  Senior software engineer on a real-money cruise-line gaming platform. Originated and
   built the bulk of its flagship web client, owned product and design on key games, and
   led a cross-functional team from kickoff through launch.
 tags: [leadership, full-stack, product, design, frontend, 0-to-1, real-money, ai-native]
