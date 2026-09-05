@@ -1,4 +1,16 @@
 # Guiding principles. Voice content, returned verbatim by get_about.
+- id: agents-need-a-harness
+  title: Build the workflow and the checks, not just the software
+  body: >-
+    Most of my code for the past year has been written by coding agents, so the work that
+    matters sits upstream and downstream of the typing. I build project-specific agentic
+    workflows where every task runs planning, implementation, QA and a retrospective, each
+    task records what it learned, and I periodically review those learnings and revise the
+    workflow itself. Around the code I put deterministic checks against the probabilistic
+    nature of coding agents: lint, types, build, tests, dead-code and duplication analysis,
+    security and dependency scanning, and a runtime suite against the real built app. I
+    architect the software, the workflow the agents run in, and the checks that gate their
+    output, and I own the decision to ship.
 - id: optimize-for-leverage
   title: Optimize for leverage
   body: >-

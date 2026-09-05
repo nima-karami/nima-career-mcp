@@ -1,26 +1,50 @@
-# Stub role: title/dates are confirmed; evidence is high-level pending detail from Nima.
+# Title of record: "Architectural Designer & Computational Designer".
+# Exact months are still unconfirmed; the year range on the resume of record is 2021-2022.
+# The months below are carried forward unchanged rather than adjusted to fit a year label.
 id: diamond-schmitt-designer
 org: Diamond Schmitt Architects
-title: Architectural & Computational Designer
+title: Architectural Designer & Computational Designer
 start: "2021-01"
 end: "2021-09"
 location: Toronto, Ontario, Canada
 summary: >-
-  Architectural and computational designer applying parametric and computational methods
-  to building design.
-tags: [architecture, computational-design, design, foundations]
+  Architectural and computational designer: produced construction documents on condo
+  projects and wrote the Python and Grasshopper tooling behind the practice's geometry and
+  optimization work. He had already been using Grasshopper and Python and working on
+  construction drawings before the Master of Architecture, so the programming predates the
+  software title.
+tags: [architecture, computational-design, design, optimization, foundations]
 
 evidence:
   - id: ds-e1
     text: >-
-      Worked as an architectural and computational designer at an architecture practice,
-      applying parametric and computational design methods to building projects.
-    tags: [architecture, computational-design, design]
+      Wrote Python and Grasshopper tooling that searched tower shape, orientation and
+      placement with an evolutionary algorithm under street-setback and public-shadow
+      constraints to maximize buildable floorplate, optimized facade openings for sunlight
+      gain and views, and automated shadow analysis to the firm's presentation standard
+      rather than the generic tool output. Used to explore options, not to pick a final
+      design automatically.
+    tags: [computational-design, optimization, python, algorithms]
+  - id: ds-e2
+    text: >-
+      Produced, exported and checked construction document sets in Revit on condo
+      projects, and worked design-phase RFP competitions and the Ontario Place
+      redevelopment in Rhino. Submittal review and specifications were a licensed
+      architect's work, not his.
+    tags: [architecture, construction-documents, revit, rhino]
 
 bullets:
+  - id: ds-b2
+    text: >-
+      Produced and checked construction document sets in Revit on condo projects; worked
+      design-phase RFP competitions and the Ontario Place redevelopment in Rhino.
+    source_ids: [ds-e2]
+    tags: [architecture, construction-documents]
   - id: ds-b1
     text: >-
-      Applied computational and parametric design methods to building projects as an
-      architectural designer.
+      Wrote Python and Grasshopper tooling that searched tower shape, orientation and
+      placement with an evolutionary algorithm under setback and public-shadow constraints
+      to maximize buildable floorplate; optimized facade openings for sunlight gain and
+      views; automated shadow analysis to the firm's presentation standard.
     source_ids: [ds-e1]
-    tags: [architecture, computational-design]
+    tags: [computational-design, optimization, python]

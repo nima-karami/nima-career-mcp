@@ -1,3 +1,5 @@
+# Retired id, deliberately not reused: tpfe-b2, whose content is now folded into the
+# single tpfe-b1 line that matches the resume of record.
 id: timeplay-frontend
 company_id: timeplay
 org: TimePlay
@@ -14,14 +16,15 @@ evidence:
   - id: tpfe-e1
     text: >-
       Introduced React into the company's stack to deliver its first WCAG/ADA-accessible
-      game experiences, replacing a canvas game engine that could not be made accessible,
-      to meet a partner's legal accessibility requirements.
+      game experiences, replacing a Phaser canvas game engine that could not be made
+      accessible, to meet a cruise-line partner's legal accessibility requirements. React
+      and the tooling and conventions around it became the company's front-end stack.
     tags: [react, accessibility, technical-direction, 0-to-1]
   - id: tpfe-e2
     text: >-
       Was the primary engineer end to end on all six accessible mobile game controllers in
-      the accessibility suite (React + Tailwind), passing a third-party accessibility audit
-      and partner sign-off.
+      the accessibility suite (React, Tailwind, aria-live, focus management), passing a
+      third-party accessibility audit and partner sign-off.
     tags: [accessibility, ownership, react]
   - id: tpfe-e3
     text: >-
@@ -35,18 +38,13 @@ evidence:
 bullets:
   - id: tpfe-b1
     text: >-
-      Introduced React to the company to build its first WCAG/ADA-accessible game
-      experiences, replacing an inaccessible canvas engine to meet a partner's legal
-      requirements.
-    source_ids: [tpfe-e1]
-    tags: [react, accessibility, technical-direction]
-  - id: tpfe-b2
-    text: >-
-      Was primary engineer on all six accessible mobile game controllers, passing a
-      third-party audit; they reach 600,000+ players a year and became the default
-      controller across partners.
+      Introduced React into the company's stack to meet a cruise-line partner's
+      accessibility requirement the Phaser trivia games could not. Primary engineer on all
+      six accessible mobile game controllers (React, Tailwind, aria-live, focus
+      management); passed a third-party audit, and the accessible build became the default
+      across partners. Trivia reaches 600,000+ players a year.
     metrics:
       - label: players per year
         value: "600,000+"
-    source_ids: [tpfe-e2, tpfe-e3]
-    tags: [accessibility, ownership]
+    source_ids: [tpfe-e1, tpfe-e2, tpfe-e3]
+    tags: [react, accessibility, technical-direction, ownership]

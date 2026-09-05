@@ -1,0 +1,61 @@
+# Same authorship framing as Conduit: architected, specified, reviewed, verified, operate.
+# Never "wrote". The audience is one person (himself) and the repo is private with no public
+# demo, so there is no link block and nothing here may imply users, adoption or an audience.
+id: vega
+name: Vega Life OS
+blurb: >-
+  A personal life operating system (values, goals, habits, tasks, finance) that he
+  architected and operates daily. Private, single user, no public demo.
+tags: [full-stack, typescript, operations, architecture, ai-native, agentic]
+
+evidence:
+  - id: vga-e1
+    text: >-
+      Architected and operates a deployed full-stack personal platform: a React SPA on
+      Firebase Hosting, a Node / Hono / tRPC backend on Cloud Run that owns Firestore, and
+      a shared schema package that generates both API validation and store converters.
+      Firestore rules block client writes outright, so every write goes through one
+      validated, uid-scoped server path. Agents wrote most of the lines under his
+      direction. In daily use by one person, himself.
+    tags: [architecture, full-stack, typescript, hono, trpc, firestore, cloud-run]
+  - id: vga-e2
+    text: >-
+      Caught a runaway cloud-cost incident from his own card statement: a timezone
+      assumption in a calendar sync signature had created a self-feeding loop that ran
+      undetected for 19 days. He traced it to the billing SKU and the service, correlated
+      request volume against the cron that should have driven it, then directed the fix and
+      the convergence test that guards it by asserting a settled sync writes zero.
+    metrics:
+      - label: days the loop ran undetected
+        value: "19"
+    tags: [operations, debugging, cost, incident]
+  - id: vga-e3
+    text: >-
+      Generalized that one incident into a named bug class, work that repeats forever
+      because nothing proves it converged, then swept every recurring path, found two more
+      instances, and explicitly cleared four other candidates rather than assuming them
+      safe.
+    tags: [operations, debugging, judgment]
+  - id: vga-e4
+    text: >-
+      Shipped four versioned data migrations against live personal data that could not be
+      discarded, including a three-collection fold guarded three ways and returning a
+      tri-state complete / deferred / incomplete rather than a boolean.
+    tags: [data, migrations, backend]
+
+bullets:
+  - id: vga-b1
+    text: >-
+      Architected and operates a deployed personal platform he uses every day (React on
+      Firebase Hosting, Node / Hono / tRPC on Cloud Run), where client writes are blocked
+      at the database and every write goes through one validated, uid-scoped server path.
+    source_ids: [vga-e1]
+    tags: [architecture, full-stack, operations]
+  - id: vga-b2
+    text: >-
+      Caught a runaway cloud-cost incident from his own card statement, a timezone
+      assumption in a calendar sync that had looped for 19 days, traced it to the billing
+      SKU, directed the fix and the convergence test that guards it, then generalized it
+      into a bug class and swept every recurring path.
+    source_ids: [vga-e2, vga-e3]
+    tags: [operations, debugging, incident, judgment]

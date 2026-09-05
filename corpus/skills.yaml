@@ -1,12 +1,27 @@
 # Skills grouped by category. Each skill links the evidence ids that back it, so a skill is
 # never an unsupported claim.
+#
+# Python is deliberately marked "working", not expert or proficient: he has designed and
+# deployed a real Python service on the official MCP SDK through an AI-native workflow, and
+# that is the whole claim. No entry here may read as Python fluency or seniority.
 - category: Engineering
   skills:
-    - { name: TypeScript, proficiency: expert, evidence_ids: [tpl-e1, yrs-e1, scg-e1] }
+    - { name: TypeScript, proficiency: expert, evidence_ids: [tpl-e1, yrs-e1, vga-e1, scg-e1] }
     - { name: React, proficiency: expert, evidence_ids: [tpl-e1, tpfe-e1, yrs-e1] }
     - { name: Node.js / Express, proficiency: proficient, evidence_ids: [tpf-e2, scg-e4] }
+    - { name: Hono / tRPC, proficiency: proficient, evidence_ids: [vga-e1] }
     - { name: Go, proficiency: proficient, evidence_ids: [tpl-e6] }
-    - { name: Python, proficiency: proficient, evidence_ids: [cm-e1, cm-e2] }
+    - { name: Python, proficiency: working, evidence_ids: [cm-e1, cm-e2, ds-e1] }
+    - { name: PostgreSQL, proficiency: proficient, evidence_ids: [tpl-e6] }
+    - { name: MongoDB, proficiency: proficient, evidence_ids: [tpf-e2] }
+    - { name: Firestore, proficiency: proficient, evidence_ids: [vga-e1] }
+    - { name: REST APIs & schema-validated boundaries, proficiency: proficient, evidence_ids: [tpl-e6, tpl-e9, vga-e1] }
+    - { name: System design & architecture, proficiency: proficient, evidence_ids: [tpl-e9, yrs-e6, vga-e1] }
+    - { name: Docker, proficiency: proficient, evidence_ids: [tpf-e6] }
+    - { name: GCP Cloud Run, proficiency: proficient, evidence_ids: [vga-e1] }
+    - { name: Fly.io, proficiency: proficient, evidence_ids: [cm-e1] }
+    - { name: Test automation (Vitest, Jest, Playwright), proficiency: proficient, evidence_ids: [cdt-e2, cm-e3] }
+    - { name: Production operations & debugging, proficiency: proficient, evidence_ids: [tpl-e11, tpf-e6, vga-e2] }
     - { name: Three.js / React Three Fiber, proficiency: proficient, evidence_ids: [yrs-e2] }
     - { name: Frontend architecture & performance, proficiency: expert, evidence_ids: [tpl-e1, ysd-e2, ysd-e3] }
     - { name: Real-time systems & job queues, proficiency: proficient, evidence_ids: [scg-e4] }
@@ -14,16 +29,18 @@
 - category: Product & Design
   skills:
     - { name: Product discovery & customer research, proficiency: proficient, evidence_ids: [yrs-e3] }
-    - { name: UX / interaction design (Figma), proficiency: expert, evidence_ids: [tpl-e5, fl-e1] }
-    - { name: 0-to-1 product & positioning, proficiency: proficient, evidence_ids: [yrs-e3, tpl-e2] }
-    - { name: Product analytics & instrumentation, proficiency: proficient, evidence_ids: [tpl-e6] }
+    - { name: UX / interaction design (Figma), proficiency: expert, evidence_ids: [tpf-e4, fl-e1] }
+    - { name: 0-to-1 product & positioning, proficiency: proficient, evidence_ids: [yrs-e3, tpl-e1] }
+    - { name: Product analytics & event instrumentation, proficiency: proficient, evidence_ids: [tpl-e6] }
+    - { name: Feature flags & configuration systems, proficiency: proficient, evidence_ids: [tpl-e4, tpl-e12] }
 - category: AI-Native
   skills:
     - { name: LLM & multimodal pipelines, proficiency: proficient, evidence_ids: [scg-e2, yrs-e4] }
-    - { name: AI evals & vision-LLM QA, proficiency: proficient, evidence_ids: [scg-e3] }
-    - { name: Agentic / AI-assisted development, proficiency: expert, evidence_ids: [scg-e1, tpl-e8] }
-    - { name: Model Context Protocol (MCP) & agent tooling, proficiency: proficient, evidence_ids: [cm-e1, tpl-e8] }
+    - { name: Vision-LLM QA loops & AI evals, proficiency: proficient, evidence_ids: [scg-e3] }
+    - { name: Agentic / AI-assisted development, proficiency: expert, evidence_ids: [cdt-e1, scg-e1, tpl-e8, vga-e1] }
+    - { name: Agent workflow design & verification gates, proficiency: expert, evidence_ids: [tpl-e10, cdt-e2, cm-e3] }
+    - { name: Model Context Protocol (MCP), official Python SDK, proficiency: proficient, evidence_ids: [cm-e1, tpl-e8] }
 - category: Foundations
   skills:
     - { name: Computational & parametric design, proficiency: proficient, evidence_ids: [ds-e1] }
-    - { name: Architecture (M.Arch), proficiency: expert, evidence_ids: [ds-e1] }
+    - { name: Architecture (M.Arch) & construction documents, proficiency: expert, evidence_ids: [ds-e2] }

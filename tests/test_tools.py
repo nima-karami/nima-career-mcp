@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 
+from nima_career_mcp.corpus import Corpus
 from nima_career_mcp.service import CareerService
 
 
@@ -61,9 +62,17 @@ def test_search_by_org_name_survives_a_natural_question(service: CareerService) 
     }
 
 
-def test_list_bullets_by_role(service: CareerService) -> None:
+def test_list_bullets_by_role(service: CareerService, corpus: Corpus) -> None:
+    """Filtering by role returns exactly that role's bullets and no others.
+
+    Asserted against the corpus rather than a hardcoded count, so editing approved content
+    is not a test failure while a broken filter still is.
+    """
+    role = corpus.role("timeplay-fullstack")
+    assert role is not None
     bullets = service.list_bullets(role_id="timeplay-fullstack").bullets
-    assert len(bullets) == 2
+    assert bullets, "expected the role to carry approved bullets"
+    assert [b.id for b in bullets] == [b.id for b in role.bullets]
     assert all(b.source_ids for b in bullets)
 
 

@@ -1,22 +1,24 @@
+# YOURS is closed. It is dated 2025 to 2026 everywhere, never "Present".
 id: yours-founder
 company_id: yours
 org: YOURS
 title: Founder
 start: "2025-01"
-end: null
+end: "2026-03"
 location: Toronto, Ontario, Canada
 summary: >-
-  Solo founder building a browser-based custom-apparel design studio and print-on-demand
-  storefront. Validated the problem and sharpened positioning through customer research.
-tags: [founder, 0-to-1, full-stack, design-engineering, product, ai]
+  Founded a browser-based custom-apparel design studio and print-on-demand storefront,
+  built its client and its plugin architecture, and validated the problem and the
+  positioning through two product iterations and two rounds of customer conversations.
+  A closed chapter, not a running business.
+tags: [founder, 0-to-1, full-stack, design-engineering, product, customer-research, ai]
 
 evidence:
   - id: yrs-e1
     text: >-
-      Founded and solo-built YOURS, a browser-based real-time custom-apparel design
-      studio: users design on a 2D canvas, see it composited live onto a 3D garment, and
-      order through a print-on-demand storefront (React 19, TypeScript, Three.js / React
-      Three Fiber, Konva, Stripe, Printful).
+      Founded YOURS and built its browser design studio: users design on a 2D canvas, see
+      it composited live onto a 3D garment, and order through a print-on-demand storefront
+      (React 19, TypeScript, Three.js / React Three Fiber, Konva, Stripe, Printful).
     tags: [founder, 0-to-1, full-stack, design-engineering]
   - id: yrs-e2
     text: >-
@@ -26,9 +28,10 @@ evidence:
     tags: [graphics, three.js, performance, craft]
   - id: yrs-e3
     text: >-
-      Ran 25+ customer-discovery conversations across two rounds, surfaced the segment
-      split between creatives and non-creatives ("blank-canvas anxiety"), and committed the
-      product to a gift-giver wedge.
+      Ran 25+ customer conversations across two product iterations and two rounds of live
+      demos, surfaced the segment split between creatives and non-creatives ("blank-canvas
+      anxiety"), and narrowed the product to gift givers, the segment with the clearest
+      pain and the least price sensitivity.
     metrics:
       - label: customer conversations
         value: "25+"
@@ -37,41 +40,55 @@ evidence:
     text: >-
       Prototyped a conversational AI design concierge that extracts a structured design
       spec from natural dialogue and fans out to AI image generation, as the on-ramp for
-      non-creative users.
+      non-creative users. A prototype, not a finished feature.
     tags: [ai, product, design, prototype]
   - id: yrs-e5
     text: >-
       Wired a print-on-demand commerce path (Stripe payments, Printful fulfillment, GeoIP
       multi-currency pricing, live shipping quotes, print-file generation) to demonstrate
-      the purchase experience.
+      the purchase experience rather than as a fully transacting checkout.
     tags: [ecommerce, integration, stripe]
+  - id: yrs-e6
+    text: >-
+      Re-architected the product into a monorepo in four days (feature-sliced services, a
+      versioned API, shared Zod schemas) and moved every third-party call server-side,
+      removing vendor API keys from the browser bundle.
+    tags: [architecture, monorepo, security, backend, typescript]
 
 bullets:
   - id: yrs-b1
     text: >-
-      Founded and solo-built YOURS, a real-time custom-apparel design studio with live
-      2D-to-3D preview and a print-on-demand storefront (React 19, Three.js, Stripe,
-      Printful).
-    source_ids: [yrs-e1, yrs-e2]
-    tags: [founder, 0-to-1, design-engineering]
+      Founded YOURS and built its browser design studio: 2D canvas composited live onto a
+      3D garment (Three.js / React Three Fiber), on a plugin architecture that adds
+      products and tools without touching the rendering engine.
+    source_ids: [yrs-e1, yrs-e2, ysd-e1]
+    tags: [founder, 0-to-1, design-engineering, architecture]
+  - id: yrs-b3
+    text: >-
+      Ran 25+ customer conversations across two product iterations and two rounds of live
+      demos, then narrowed the product to gift givers, the segment with the clearest pain
+      and the least price sensitivity.
+    metrics:
+      - label: customer conversations
+        value: "25+"
+    source_ids: [yrs-e3]
+    tags: [product, customer-research, positioning]
+  - id: yrs-b5
+    text: >-
+      Re-architected the product into a monorepo in four days (feature-sliced services,
+      versioned API, shared Zod schemas) and moved every third-party call server-side,
+      removing vendor API keys from the browser bundle.
+    source_ids: [yrs-e6]
+    tags: [architecture, security, backend]
   - id: yrs-b2
     text: >-
       Architected a client-side 2D-to-3D compositing pipeline rendering user designs onto
       3D garments at up to 4K with no server round-trips during editing.
     source_ids: [yrs-e2]
     tags: [graphics, performance]
-  - id: yrs-b3
-    text: >-
-      Ran 25+ customer-discovery interviews, identified the creative / non-creative segment
-      split, and committed the product to a gift-giver wedge.
-    metrics:
-      - label: customer conversations
-        value: "25+"
-    source_ids: [yrs-e3]
-    tags: [product, customer-research, positioning]
   - id: yrs-b4
     text: >-
       Prototyped a conversational AI design concierge that turns a natural-language brief
-      into print-ready artwork via AI image generation.
+      into a structured design spec and on into AI image generation.
     source_ids: [yrs-e4]
     tags: [ai, product, design]

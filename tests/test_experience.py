@@ -19,13 +19,14 @@ def test_progression_groups_into_one_tenure(service: CareerService) -> None:
 
 
 def test_distinct_companies_are_separate_tenures(service: CareerService) -> None:
-    # Roles without a shared company_id each stand alone; YOURS is its own open-ended tenure.
+    # Roles without a shared company_id each stand alone. YOURS is its own single-title
+    # tenure and it is closed, so it carries a real end date rather than "Present".
     exp = service.list_experience()
     company_ids = {c.company_id for c in exp.companies}
     assert {"timeplay", "yours"}.issubset(company_ids)
     yours = next(c for c in exp.companies if c.company_id == "yours")
     assert len(yours.positions) == 1
-    assert yours.end is None
+    assert yours.end is not None
     # Newest tenure sorts first overall.
     starts = [c.start for c in exp.companies]
     assert starts == sorted(starts, reverse=True)

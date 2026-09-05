@@ -9,17 +9,21 @@ links:
   github: https://github.com/nima-karami
   linkedin: https://www.linkedin.com/in/nima-karami
 bio: >-
-  Product engineer who takes things from ambiguous idea to shipped software, across the
-  whole stack. I trained as an architect, which taught me to hold messy, multi-dimensional
-  problems in my head until the through-line appears; I now use that to decompose problems,
-  decide what gets built, and own what happens after it ships.
+  Senior full-stack engineer with 5+ years shipping production software for the web: React
+  and TypeScript in front, Go, Node and Python behind. I do my best work with end-to-end
+  ownership, from the customer problem through architecture, launch and operation.
 
 
-  Senior engineer at TimePlay, where I own the web client of a real-money gaming platform
-  and built the backend pieces it needed. On my own time I build AI-native products end to
-  end (React, TypeScript, Node, Python, GCP), and for the last year most of that code is
-  written by coding agents I direct and verify: github.com/nima-karami/conduit is the
-  open-source editor I built for exactly that.
+  I trained and practised as an architect, and I produced the drawing sets and construction
+  documents that construction software reads, so I know those documents from the side that
+  makes them. That training is also where the working habit comes from: hold a messy,
+  multi-dimensional problem until the one clear line appears.
+
+
+  For the past year I have built mostly through coding agents. I architect the software, the
+  workflow the agents run in, and the checks that gate their output, and I own the decision
+  to ship. Every task in those workflows runs planning, implementation, QA and a
+  retrospective, and I revise the workflow itself from what the retrospectives record.
 
 
   Design is where I started and it still shows in the work. Toronto, in person.
@@ -28,7 +32,7 @@ bio: >-
 # The headline is a standalone positioning line, not a noun phrase, so each template sets
 # it as its own sentence rather than reading through it.
 summary_templates:
-  - "{headline}. I take things from ambiguous idea to shipped software, across {top_tags}."
-  - "{headline}. Trained as an architect, now working across {top_tags} with a bias toward design taste and product judgment."
+  - "{headline}. 5+ years shipping production software for the web, with end-to-end ownership from the customer problem through architecture, launch and operation, across {top_tags}."
+  - "{headline}. Trained as an architect, now 5+ years into building product software across {top_tags}, with a bias toward design taste, product judgment, and owning what happens after the ship."
 
 contact_policy: "Reach out through the website or LinkedIn."

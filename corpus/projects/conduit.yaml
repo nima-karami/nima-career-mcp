@@ -1,0 +1,68 @@
+# Authorship framing is fixed for this project and must not drift: architected, directed,
+# specified, verified, operate. Never "wrote" or "implemented" - the repo's own README says
+# the code is agent-written and not human-reviewed, so a "wrote" claim is contradicted by
+# the artifact's front page. No adoption, user-count or download claims belong here.
+id: conduit
+name: Conduit
+blurb: >-
+  Desktop control tower for running several CLI coding agents at once, and an experiment in
+  how far agentic, multi-agent development can be pushed. Public and MIT-licensed at
+  github.com/nima-karami/conduit.
+tags: [agentic, ai-native, open-source, electron, typescript, developer-experience, verification]
+
+evidence:
+  - id: cdt-e1
+    text: >-
+      Architected a desktop control tower for running several CLI coding agents at once, as
+      an experiment in how far agentic, multi-agent development can be pushed. Owns the
+      product decisions and the architecture, including the pivot to a standalone Electron
+      app; agents wrote the implementation under his direction. 78 Windows releases in ten
+      weeks with a working auto-updater.
+    metrics:
+      - label: Windows releases in ten weeks
+        value: "78"
+    tags: [agentic, electron, architecture, ownership]
+  - id: cdt-e2
+    text: >-
+      Architected the verification gate that replaces line-by-line human review,
+      deterministic checks against the probabilistic output of coding agents: lint,
+      typechecks, build, unit tests, dead-code, duplication and complexity analysis
+      (Fallow), Semgrep, dependency audit and secret scanning on every push, plus an
+      86-scenario Playwright suite run against the real built app before merge (by policy
+      and run report; that runtime suite runs on Windows outside CI).
+    metrics:
+      - label: Playwright scenarios against the built app
+        value: "86"
+    tags: [verification, testing, security, ci, agentic]
+  - id: cdt-e3
+    text: >-
+      Designed the "agent proposes, human accepts" contract for project knowledge, and
+      recorded the rejected alternative in writing alongside it, so the decisions an agent
+      may not make on its own are explicit.
+    tags: [agentic, architecture, process, documentation]
+
+bullets:
+  - id: cdt-b1
+    text: >-
+      Architected a desktop control tower for running several CLI coding agents at once, an
+      experiment in how far agentic, multi-agent development can be pushed; owns the
+      product decisions, agents wrote the implementation under his direction, 78 Windows
+      releases in ten weeks with a working auto-updater.
+    metrics:
+      - label: Windows releases in ten weeks
+        value: "78"
+    source_ids: [cdt-e1]
+    tags: [agentic, ai-native, electron, ownership]
+  - id: cdt-b2
+    text: >-
+      Architected the verification gate that replaces line-by-line human review,
+      deterministic checks against the probabilistic output of coding agents: lint,
+      typechecks, build, unit tests, dead-code, duplication and complexity analysis,
+      Semgrep, dependency audit and secret scanning on every push, plus an 86-scenario
+      Playwright suite against the real built app before merge.
+    source_ids: [cdt-e2]
+    tags: [verification, testing, security, agentic]
+
+links:
+  - label: GitHub
+    url: https://github.com/nima-karami/conduit

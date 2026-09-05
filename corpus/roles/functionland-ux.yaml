@@ -1,20 +1,27 @@
-# Stub role: title/dates are confirmed; evidence is high-level pending detail from Nima.
+# Title of record: "UX Designer / Front-End Developer". The role genuinely was hybrid, so
+# the hybrid title is the same on every version of the resume and here.
 id: functionland-ux
 org: Functionland
-title: UX Designer
+title: UX Designer / Front-End Developer
 start: "2021-09"
 end: "2022-08"
 location: Toronto, Ontario, Canada
-summary: UX designer producing user flows and interface designs for a technology product.
-tags: [ux, design, product]
+summary: >-
+  Hybrid designer and front-end developer on a technology product: owned the product and
+  site UX/UI and built the website front end.
+tags: [ux, design, frontend, product, figma]
 
 evidence:
   - id: fl-e1
-    text: Worked as a UX designer, producing user flows and interface designs for a technology product.
-    tags: [ux, design]
+    text: >-
+      Designed the product and site UX/UI in Figma, built the website front end, and
+      coordinated the design team.
+    tags: [ux, design, frontend, figma]
 
 bullets:
   - id: fl-b1
-    text: Designed user flows and interfaces as a UX designer on a technology product.
+    text: >-
+      Designed the product and site UX/UI in Figma, built the website front end,
+      coordinated the design team.
     source_ids: [fl-e1]
-    tags: [ux, design]
+    tags: [ux, design, frontend]

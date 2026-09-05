@@ -4,6 +4,10 @@
 # Developer" must not appear as a title, because Lead -> Senior reads as a demotion to
 # anyone who cannot see it was a company-wide standardization. The lead-era scope is
 # kept where it belongs: in the summary and in the evidence and bullets below.
+#
+# Retired ids, deliberately not reused: tpl-e5 / tpl-b4 (the Deal or No Deal work, which
+# belongs to the Full-Stack Developer window and now lives as tpf-e4 / tpf-b3) and
+# tpl-b6 (the standalone team-leadership line, now folded into tpl-b1).
 id: timeplay-lead
 company_id: timeplay
 org: TimePlay
@@ -12,17 +16,21 @@ start: "2024-08"
 end: null
 location: Toronto, Ontario, Canada
 summary: >-
-  Senior software engineer on a real-money cruise-line gaming platform. Originated and
-  built the bulk of its flagship web client, owned product and design on key games, and
-  led a cross-functional team from kickoff through launch.
-tags: [leadership, full-stack, product, design, frontend, 0-to-1, real-money, ai-native]
+  Senior software engineer on a real-money cruise-line gaming platform, working across the
+  web clients and the Go and Node services behind them; the team is all full stack, split
+  by area rather than by layer. Created the flagship lottery client, led the team that
+  launched it, owns the analytics system end to end, and built Game Store 2.0, the shell,
+  engine and SDK behind the lottery products.
+tags: [leadership, full-stack, product, design, frontend, backend, architecture, analytics, 0-to-1, real-money, ai-native]
 
 evidence:
   - id: tpl-e1
     text: >-
-      Originated and built the bulk of a real-money gaming web client (React 18,
-      TypeScript, Vite) for cruise-line partners, from the first commit through multiple
-      production launches; the largest individual code contributor to the codebase.
+      Created the real-money gaming web client (React, TypeScript, Vite) for cruise-line
+      partners as the proof of concept for the company's first lottery product, and built
+      the bulk of it from the first commit through multiple production launches: the
+      instant-win engine, the payment and wallet flows, the PWA shell and its
+      accessibility.
     tags: [frontend, ownership, 0-to-1, react, typescript]
   - id: tpl-e2
     text: >-
@@ -44,59 +52,118 @@ evidence:
     text: >-
       Designed and built a partner-configuration system (feature flags, behavior, copy,
       and theming from a single source of truth) that serves seven major cruise-line
-      brands without forking the codebase.
+      brands without forking the codebase, and wrote its documentation.
     metrics:
       - label: cruise-line brands served
         value: "7"
-    tags: [architecture, configuration, white-label, scale]
-  - id: tpl-e5
-    text: >-
-      Owned the UX and product of a Deal or No Deal mobile game end to end: designed the
-      full flow in Figma, implemented the front end, and shipped it. The mobile launch
-      increased players and gross revenue by 12%.
-    metrics:
-      - label: players and gross revenue
-        value: "+12%"
-    tags: [design, product, figma, frontend, revenue]
+    tags: [architecture, configuration, feature-flags, white-label, scale, documentation]
   - id: tpl-e6
     text: >-
-      Built a full-stack product-analytics system: a client-side event pipeline
-      (buffer / flush / retry) instrumented across the app, plus a batch
-      activity-ingestion endpoint (Go, Gin, GORM / Postgres) with PII masking, and
-      authored its documentation.
-    tags: [analytics, full-stack, go, instrumentation, documentation]
+      Owns the platform's analytics system end to end. There was no analytics service and
+      nobody could see how a player moved through the app, so he agreed the event taxonomy
+      with the analysts and customer success against what they wanted to measure,
+      instrumented the client with a buffer, flush and retry pipeline across the lottery
+      app, storefronts and games, and built batch ingestion in the Go service (Gin, GORM,
+      Postgres). Because batching plus client-side retries makes server-assigned ids
+      duplicate, the event id is minted on the client and the server records it. He also
+      built the PII masking on the warehouse exports and the translator layer that
+      reshapes the data for the global data warehouse, and authored the documentation.
+    tags: [analytics, full-stack, go, instrumentation, backend, documentation]
   - id: tpl-e7
     text: >-
       Led a cross-functional team of up to seven developers (junior, contract, game, and
-      backend developers) building the flagship web client from kickoff through its
-      initial launch.
-    tags: [leadership, team]
+      backend developers), most of them new to React, building the flagship web client
+      from kickoff through its initial launch.
+    tags: [leadership, team, mentoring]
   - id: tpl-e8
     text: >-
       Built agent-operable engineering tooling: CLI-driven pipelines and an agentic
       pull-request review workflow that returns structured review reports, plus reusable
       machine-readable instructions ("skills") for coding agents shared with teammates.
     tags: [ai-native, tooling, agents, developer-experience]
+  - id: tpl-e9
+    text: >-
+      Built Game Store 2.0, the shell, engine and SDK behind the lottery products, on a
+      ports-and-adapters architecture: game developers outside the company build against
+      the SDK without touching the backend, iframed games and in-process federated
+      storefronts sit behind separate trust boundaries because they carry different
+      trust, every money operation is schema-validated at the boundary, and the backends
+      are swappable adapters so the product can be deployed beyond the ships.
+    tags: [architecture, backend, frontend, sdk, security, platform]
+  - id: tpl-e10
+    text: >-
+      Designed the project-specific agent workflow behind that rebuild: every task runs
+      planning, implementation, QA and a retrospective, each task records its learnings,
+      and he periodically reviews the accumulated learnings and revises the workflow
+      itself.
+    tags: [ai-native, agents, process, developer-experience]
+  - id: tpl-e11
+    text: >-
+      Debugs production issues on ships from logs, screenshots and customer-success
+      reports, for a platform where every ship runs its own configured stack and no
+      engineer is aboard. Traced garbled non-ASCII text in the trivia games across the
+      six services of the content pipeline by reproducing the ship stack version for
+      version on shore and logging each hop, then fixed the encoding in the C# game
+      server, which was treating message text as single-byte rather than UTF-8, after the
+      first diagnosis had blamed the front end.
+    tags: [production, debugging, operations, backend]
+  - id: tpl-e12
+    text: >-
+      Layered per-brand configuration and a design-token theming system onto Game Store
+      2.0, designed together with the outsourced design team, plus dev tooling that
+      exposes every state and every function the SDK offers to both humans and coding
+      agents.
+    tags: [configuration, design-systems, developer-experience, ai-native]
 
 bullets:
+  - id: tpl-b8
+    text: >-
+      Built Game Store 2.0, the shell, engine and SDK behind the lottery products, on a
+      ports-and-adapters architecture: outside game developers build against the SDK
+      without touching the backend, iframed games and in-process federated storefronts sit
+      behind separate trust boundaries, every money operation is schema-validated at the
+      boundary, and backends are swappable adapters for deployment beyond the ships.
+      Layered per-brand configuration and theming, and dev tooling that exposes every SDK
+      state and function to humans and coding agents.
+    source_ids: [tpl-e9, tpl-e12]
+    tags: [architecture, platform, sdk, backend, frontend]
+  - id: tpl-b5
+    text: >-
+      Owns the analytics system end to end: defined the event taxonomy with the analysts
+      and customer success, instrumented the client with a buffer, flush and retry
+      pipeline, and built batch ingestion in the Go service (Gin, GORM, Postgres) with
+      client-minted event ids for idempotent retries, PII-masked exports and the
+      translator layer feeding the global warehouse.
+    source_ids: [tpl-e6]
+    tags: [analytics, full-stack, go, instrumentation]
+  - id: tpl-b9
+    text: >-
+      Debugs production issues on ships from logs, screenshots and customer-success
+      reports. Traced garbled non-ASCII text in the trivia games across six services by
+      reproducing the ship stack version for version and logging each hop, and fixed the
+      encoding in the C# game server.
+    source_ids: [tpl-e11]
+    tags: [production, debugging, operations]
   - id: tpl-b1
     text: >-
-      Originated and built the bulk of a real-money cruise-line gaming web client
-      (React / TypeScript) from the first commit through multiple production launches, as
-      the largest individual contributor to the codebase.
-    source_ids: [tpl-e1]
-    tags: [frontend, ownership, 0-to-1]
-  - id: tpl-b2
-    text: >-
-      Created a real-money lottery web client and storefront whose launch drove a +21%
-      gross-revenue lift for the partner, at a 35% storefront conversion rate.
+      Created the real-money cruise-line gaming web client (React, TypeScript) as a proof
+      of concept for the company's first lottery product, led a team of up to seven
+      through launch, and built the bulk of it: instant-win engine, payment and wallet
+      flows, PWA, accessibility. The launch lifted the cruise line's gross revenue 21%.
     metrics:
       - label: partner gross-revenue lift
         value: "+21%"
+    source_ids: [tpl-e1, tpl-e2, tpl-e7]
+    tags: [frontend, ownership, 0-to-1, leadership, revenue]
+  - id: tpl-b2
+    text: >-
+      Built the lottery storefront behind that launch, which converts at 35%, well above
+      typical storefront benchmarks.
+    metrics:
       - label: storefront conversion
         value: "35%"
-    source_ids: [tpl-e2, tpl-e3]
-    tags: [product, revenue, conversion, 0-to-1]
+    source_ids: [tpl-e3]
+    tags: [product, conversion, ecommerce]
   - id: tpl-b3
     text: >-
       Designed and built a partner-configuration system (feature flags, behavior, copy,
@@ -106,28 +173,14 @@ bullets:
       - label: cruise-line brands served
         value: "7"
     source_ids: [tpl-e4]
-    tags: [architecture, configuration, scale]
-  - id: tpl-b4
+    tags: [architecture, configuration, feature-flags, scale]
+  - id: tpl-b10
     text: >-
-      Led the UX, front end, and product of a Deal or No Deal mobile game from Figma
-      through production; the launch lifted players and gross revenue 12%.
-    metrics:
-      - label: players and gross revenue
-        value: "+12%"
-    source_ids: [tpl-e5]
-    tags: [design, product, frontend]
-  - id: tpl-b5
-    text: >-
-      Built a full-stack product-analytics system, a client event pipeline plus a Go
-      ingestion endpoint with PII masking, and wrote its documentation.
-    source_ids: [tpl-e6]
-    tags: [analytics, full-stack, go]
-  - id: tpl-b6
-    text: >-
-      Led a cross-functional team of up to seven developers building the flagship client
-      from kickoff through its initial launch.
-    source_ids: [tpl-e7]
-    tags: [leadership]
+      Designed the project's agent workflow, where every task runs planning,
+      implementation, QA and a retrospective, and revises the workflow itself from the
+      recorded learnings.
+    source_ids: [tpl-e10]
+    tags: [ai-native, agents, process]
   - id: tpl-b7
     text: >-
       Built agent-operable tooling: CLI pipelines, an agentic PR-review workflow that

@@ -1,33 +1,56 @@
+# Claim ceiling: "designed, deployed and instrumented", never "used". Nothing here claims
+# traffic, an audience, or Python seniority: the true claim is that he shipped a real
+# deployed Python service on the official SDK through an AI-native workflow.
 id: career-mcp
-name: Career MCP + terminal portfolio
+name: Career MCP server + terminal portfolio
 blurb: >-
-  This server: a public, read-only Model Context Protocol server over a vetted,
-  honesty-by-construction career corpus, powering a terminal-style portfolio where
-  visitors chat about my work and request tailored resume drafts (Python, Streamable
-  HTTP, deployed on Fly.io).
-tags: [mcp, python, ai-native, open-source, design-engineering]
+  This server: a public Model Context Protocol server in Python on the official SDK
+  (Fly.io, 11 read-only tools over a curated corpus) that grounds the chat on his
+  terminal-style personal site. Public and MIT-licensed.
+tags: [mcp, python, ai-native, open-source, design-engineering, verification]
 
 evidence:
   - id: cm-e1
     text: >-
-      Designed and built a public, read-only MCP server (Python, FastMCP, Streamable HTTP)
-      over a vetted career corpus, enforcing honesty-by-construction so it can only ever
-      return curated data, and deployed it on Fly.io.
+      Designed and deployed a public Model Context Protocol server in Python on the
+      official SDK, 11 read-only tools over a curated corpus, running on Fly.io over
+      Streamable HTTP, and consumed it from the site so the chat there is grounded in
+      vetted data end to end.
+    metrics:
+      - label: read-only tools
+        value: "11"
     tags: [mcp, python, ai-native, open-source]
   - id: cm-e2
     text: >-
-      Hardened the public endpoint with rate limiting, body-size caps, and Origin / Host
-      validation, plus a Pydantic integrity layer that fails closed on malformed data.
+      Hardened the intentionally public, unauthenticated endpoint after a security review:
+      per-IP rate limiting keyed on the unforgeable client IP with idle-bucket eviction,
+      a body-size cap enforced on the real request stream, and Origin and Host validation
+      against DNS rebinding.
     tags: [security, backend, python]
+  - id: cm-e3
+    text: >-
+      Made the anti-hallucination guarantee structural rather than prompt-based: a Pydantic
+      chokepoint every tool reads through, integrity validation that fails the server at
+      startup on a dangling reference, provenance ids attached to every assembled line, and
+      property tests asserting that every emitted line exists in the corpus.
+    tags: [verification, testing, ai-native, python, architecture]
 
 bullets:
   - id: cm-b1
     text: >-
-      Built a public, read-only MCP server over a vetted career corpus with
-      honesty-by-construction guarantees, powering a terminal-style AI portfolio (Python,
-      Streamable HTTP, Fly.io).
-    source_ids: [cm-e1]
-    tags: [mcp, ai-native, open-source]
+      Designed and deployed a public Model Context Protocol server in Python on the
+      official SDK (Fly.io, 11 read-only tools over a curated corpus) that grounds the chat
+      on his site. Structural anti-hallucination: a Pydantic chokepoint, provenance ids,
+      and property tests asserting every emitted line exists in the corpus.
+    source_ids: [cm-e1, cm-e3]
+    tags: [mcp, ai-native, open-source, verification]
+  - id: cm-b2
+    text: >-
+      Hardened a deliberately public, unauthenticated endpoint with per-IP rate limiting on
+      the unforgeable client IP, a body cap enforced on the real request stream, and Origin
+      and Host validation.
+    source_ids: [cm-e2]
+    tags: [security, backend]
 
 links:
   - label: GitHub

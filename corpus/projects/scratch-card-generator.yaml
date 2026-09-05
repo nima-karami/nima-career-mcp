@@ -1,20 +1,28 @@
+# Lock: "built and demoed". It was built on his own time, ran locally for a live multi-day
+# session, and was NEVER hosted and never had users. No role_id: this is a personal project
+# he demoed at work, not an employer deliverable. Never say "deployed", "users", or
+# "production" about it.
 id: scratch-card-generator
 name: AI-native game-asset pipeline
-role_id: timeplay-lead
 blurb: >-
   Prompt-to-playable scratch-card game generator: an LLM creative director designs a
   visual identity, a multimodal pipeline generates every asset, a vision-LLM QA loop
-  repairs them, and the result is composed into a playable React game. Built solo in
-  ~3 weeks with agentic coding; the demo that launched the company's internal AI
-  initiative.
+  repairs them, and the result is composed into a playable React game. Built on his own
+  time in about three weeks with agentic coding and demoed live at work; never hosted, no
+  users.
 tags: [ai, multimodal, pipeline, react, agentic, evals, 0-to-1]
 
 evidence:
   - id: scg-e1
     text: >-
       Built an end-to-end prompt-to-playable pipeline that turns one text theme into a
-      complete scratch-card game, solo in ~3 weeks with agentic coding; it became the
-      proof-of-concept that launched the company's internal AI initiative.
+      complete scratch-card game, on his own time in about three weeks with agentic coding,
+      and ran a live multi-day session that generated 37 themed cards end to end. It was
+      never hosted and had no users; the live demo of it at work is what started the
+      company's internal AI group.
+    metrics:
+      - label: themed cards generated end to end
+        value: "37"
     tags: [ai, pipeline, agentic, 0-to-1]
   - id: scg-e2
     text: >-
@@ -26,7 +34,12 @@ evidence:
     text: >-
       Engineered an automated QA-and-repair loop combining an algorithmic frame validator
       and a vision-LLM critic that returns grid-coordinate edit instructions, surgically
-      editing failed assets instead of regenerating.
+      editing failed assets instead of regenerating. He evaluated both approaches and chose
+      the vision-LLM loop for the full-pipeline path, keeping the algorithmic checks in the
+      per-stage harness; it ran over 217 QA attempts across 106 sprite sheets.
+    metrics:
+      - label: QA attempts across 106 sprite sheets
+        value: "217"
     tags: [ai, qa, vision-llm, evals]
   - id: scg-e4
     text: >-
@@ -38,14 +51,16 @@ evidence:
 bullets:
   - id: scg-b1
     text: >-
-      Built, solo with agentic coding in ~3 weeks, a prompt-to-playable game-asset
-      pipeline that became the demo launching the company's internal AI initiative.
+      Built and demoed live, on his own time with agentic coding in about three weeks, a
+      prompt-to-playable game-asset pipeline that became the demo starting the company's
+      internal AI group.
     source_ids: [scg-e1]
     tags: [ai, agentic, 0-to-1]
   - id: scg-b2
     text: >-
       Designed a two-phase LLM creative director and an automated vision-LLM QA-and-repair
-      loop to keep a multimodal asset set coherent and self-correcting.
+      loop, chosen over algorithmic checks on the evidence, to keep a multimodal asset set
+      coherent and self-correcting.
     source_ids: [scg-e2, scg-e3]
     tags: [ai, evals, vision-llm]
   - id: scg-b3
