@@ -33,11 +33,24 @@ class SearchHit:
     tags: list[str]
 
 
+def _normalize(text: str) -> str:
+    """Lowercase and flatten punctuation to spaces so tokens compare on words alone.
+
+    `token_set_ratio` splits on whitespace only, so without this the role haystack
+    "Lead Full-Stack Developer at TimePlay. <summary>" tokenizes the org as "timeplay."
+    (trailing sentence period). A query of "TimePlay" then shares *no* token with it, the
+    ratio degrades to a whole-string comparison, and the long role summaries score below
+    short, unrelated skill entries. Normalizing both sides restores the org-name hit.
+    """
+    return " ".join("".join(ch if ch.isalnum() else " " for ch in text.lower()).split())
+
+
 def _score(query: str, text: str, tags: list[str]) -> float:
     """Blend full-text token matching with a tag-match bonus."""
     haystack = f"{text} {' '.join(tags)}".strip()
-    base = fuzz.token_set_ratio(query.lower(), haystack.lower())
-    # Reward exact tag hits so "0-to-1" style filters rank strongly.
+    base = fuzz.token_set_ratio(_normalize(query), _normalize(haystack))
+    # Reward exact tag hits so "0-to-1" style filters rank strongly. Matched against the raw
+    # query terms, not the normalized ones: tags keep their punctuation ("0-to-1").
     q_terms = {t for t in query.lower().replace(",", " ").split() if t}
     tag_hits = sum(1 for t in tags if t.lower() in q_terms)
     return float(base) + 10.0 * tag_hits
